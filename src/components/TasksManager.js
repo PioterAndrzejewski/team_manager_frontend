@@ -10,13 +10,12 @@ import Box from "@mui/material/Box";
 
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import TeamMemberCard from "./TeamMemberCard";
-import TeamMemberNewCard from "./TeamMemberNewCard";
+import TaskCard from "./TaskCard";
 
 import { useTeam } from "../context/teamContext";
 
 function TeamManager() {
-	const { teamMembers } = useTeam();
+	const { teamMembers, teamTasks } = useTeam();
 
 	return (
 		<>
@@ -28,30 +27,21 @@ function TeamManager() {
 						pb: 6,
 					}}
 				>
-					<Container maxWidth="sm">
-						<Typography
-							component="h1"
-							variant="h2"
-							align="center"
-							color="text.primary"
-							gutterBottom
-						>
-							Your team
-						</Typography>
+					<Typography
+						component="h1"
+						variant="h2"
+						align="center"
+						color="text.primary"
+						gutterBottom
+					>
+						Current tasks:
+					</Typography>
+					<Container sx={{ py: 8 }} maxWidth="md">
+						{teamTasks.map((task) => {
+							return <TaskCard taskData={task} />;
+						})}
 					</Container>
 				</Box>
-				<Container sx={{ py: 8 }} maxWidth="md">
-					<Grid container spacing={4}>
-						{teamMembers.map((teamMember) => (
-							<TeamMemberCard
-								teamMember={teamMember}
-								addCard={false}
-								key={teamMember.memberId}
-							/>
-						))}
-						<TeamMemberNewCard />
-					</Grid>
-				</Container>
 			</main>
 		</>
 	);

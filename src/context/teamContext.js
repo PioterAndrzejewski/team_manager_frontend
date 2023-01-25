@@ -68,6 +68,8 @@ export const TeamProvider = ({ children }) => {
 			value={{
 				teamMembers,
 				setTeamMembers,
+				teamTasks,
+				setTeamTasks,
 				updateTeam,
 			}}
 		>

@@ -1,5 +1,7 @@
 import * as React from "react";
 import Toolbar from "@mui/material/Toolbar";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 
 const sections = [
@@ -17,7 +19,7 @@ function SectionBar() {
 				variant="dense"
 				sx={{ justifyContent: "center", overflowX: "auto" }}
 			>
-				{sections.map((section) => (
+				{sections.map((section, index) => (
 					<Link
 						color="inherit"
 						noWrap
@@ -26,7 +28,7 @@ function SectionBar() {
 						href={section.url}
 						sx={{ p: 10, flexShrink: 0 }}
 					>
-						{section.title}
+						{index === 0 ? "Project ID: 555" : section.title}
 					</Link>
 				))}
 			</Toolbar>
