@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -10,7 +11,14 @@ import ManageAccounts from "@mui/icons-material/ManageAccounts";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
-export default function TeamSelector() {
+export default function ProjectSelector() {
+	const [lastProject, setLastProject] = useState(null);
+	useEffect(() => {
+		const lastProjectId = localStorage.getItem("lastProjectId");
+		setLastProject(lastProjectId);
+		console.log({ lastProjectId });
+	}, []);
+
 	return (
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
@@ -57,9 +65,21 @@ export default function TeamSelector() {
 					</Button>
 					<Grid container>
 						<Grid item>
-							<Link href="#" variant="body2">
-								{"Use last project: "}
-							</Link>
+							{lastProject === null ? (
+								<Typography
+									component="span"
+									variant="span"
+									variant="body2"
+									color="text.secondary"
+									align="center"
+								>
+									Open up a project and find a shortcut here next time.
+								</Typography>
+							) : (
+								<Link href="#" variant="body2">
+									{"Open up last Project: "}
+								</Link>
+							)}
 						</Grid>
 					</Grid>
 				</Box>
