@@ -37,9 +37,36 @@ function TeamManager() {
 						Current tasks:
 					</Typography>
 					<Container sx={{ py: 8 }} maxWidth="md">
-						{teamTasks.map((task) => {
-							return <TaskCard taskData={task} />;
-						})}
+						{teamTasks
+							.filter((task) => !task.taskFinished)
+							.map((task) => {
+								return <TaskCard taskData={task} />;
+							})}
+					</Container>
+				</Box>
+
+				<Box
+					sx={{
+						bgcolor: "background.paper",
+						pt: 8,
+						pb: 6,
+					}}
+				>
+					<Typography
+						component="h1"
+						variant="h2"
+						align="center"
+						color="text.primary"
+						gutterBottom
+					>
+						Finished Tasks:
+					</Typography>
+					<Container sx={{ py: 8 }} maxWidth="md">
+						{teamTasks
+							.filter((task) => task.taskFinished)
+							.map((task) => {
+								return <TaskCard taskData={task} />;
+							})}
 					</Container>
 				</Box>
 			</main>

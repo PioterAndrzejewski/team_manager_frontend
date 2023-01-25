@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
+import { Link as RouterLink } from "react-router-dom";
 
 function Header(props) {
 	const { title } = props;
@@ -36,7 +37,7 @@ function Header(props) {
 					{title}
 				</Typography>
 
-				<Button variant="outlined" size="small">
+				<Button variant="outlined" size="small" component={RouterLink} to="/">
 					Change Project
 				</Button>
 			</Toolbar>

@@ -11,8 +11,13 @@ import ManageAccounts from "@mui/icons-material/ManageAccounts";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
+import { Link as RouterLink } from "react-router-dom";
+
 export default function ProjectSelector() {
-	const [lastProject, setLastProject] = useState(null);
+	const [lastProject, setLastProject] = useState({
+		lastProjectId: null,
+		lastProjectName: null,
+	});
 	useEffect(() => {
 		const lastProjectId = localStorage.getItem("lastProjectId");
 		const lastProjectName = localStorage.getItem("lastProjectName");
@@ -35,7 +40,7 @@ export default function ProjectSelector() {
 						<ManageAccounts />
 					</Avatar>
 					<Typography component="h1" variant="h5">
-						Open your team project
+						Open existing project
 					</Typography>
 					<Box component="form" noValidate sx={{ mt: 1 }}>
 						<TextField
@@ -61,12 +66,14 @@ export default function ProjectSelector() {
 							fullWidth
 							variant="outlined"
 							sx={{ mt: 3, mb: 2 }}
+							component={RouterLink}
+							to="/createproject"
 						>
 							Create new Project
 						</Button>
 						<Grid container>
 							<Grid item>
-								{lastProject === null ? (
+								{lastProject.lastProjectName == null ? (
 									<Typography
 										component="span"
 										variant="body2"

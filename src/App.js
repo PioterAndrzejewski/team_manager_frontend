@@ -1,4 +1,5 @@
 import React from "react";
+import { Route, Routes } from "react-router-dom";
 
 import Header from "./components/Header";
 import ProjectSelector from "./components/ProjectSelector";
@@ -16,9 +17,11 @@ function App() {
 				<header>
 					<Header title="Team Manager" />
 				</header>
-				<ProjectSelector />
-				<CreateProject />
-				<ProjectManager />
+				<Routes>
+					<Route path="/" element={<ProjectSelector />} />
+					<Route path="/createproject" element={<CreateProject />} />
+					<Route path="/manager" element={<ProjectManager />} />
+				</Routes>
 				<Copyright sx={{ mt: 8, mb: 4 }} />
 			</ThemeProvider>
 		</div>

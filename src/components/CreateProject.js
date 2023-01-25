@@ -9,6 +9,8 @@ import Box from "@mui/material/Box";
 import AddCircleOutline from "@mui/icons-material/AddCircleOutline";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { Link as RouterLink } from "react-router-dom";
+
 export default function SignUp() {
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -76,7 +78,7 @@ export default function SignUp() {
 						</Button>
 						<Grid container justifyContent="flex-end">
 							<Grid item>
-								<Link href="#" variant="body2">
+								<Link href="#" variant="body2" component={RouterLink} to="/">
 									Already have a project? Open it here
 								</Link>
 							</Grid>
