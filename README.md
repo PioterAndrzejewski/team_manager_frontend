@@ -3,7 +3,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/PioterAndrzejewski/team_manager_backend
+  <a href="https://github.com/PioterAndrzejewski/team_manager_frontend
   </a>
 
 <h3 align="center">Team Manager</h3>
@@ -33,14 +33,15 @@ Now you're ready to test the app in your browser on localhost:3000
 
 - react,
 - material UI
+                                                                 
+## Base structure of app
+
+![image](https://user-images.githubusercontent.com/109315248/214562672-34fef259-11b9-4461-bd5c-a45785ebdf93.png)                                                         
 
 ## About The Project
 
 - [ ] Project Selector - Allows you to open up existing project basing on its' ID. Module checks if there is saved Last Project in your localStorage - if so, there's a link provided to open up last project. 
     
- ## Base structure of app
-
-![image](https://user-images.githubusercontent.com/109315248/214562672-34fef259-11b9-4461-bd5c-a45785ebdf93.png)
 
 
  ## To-do
