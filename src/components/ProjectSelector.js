@@ -15,8 +15,8 @@ export default function ProjectSelector() {
 	const [lastProject, setLastProject] = useState(null);
 	useEffect(() => {
 		const lastProjectId = localStorage.getItem("lastProjectId");
-		setLastProject(lastProjectId);
-		console.log({ lastProjectId });
+		const lastProjectName = localStorage.getItem("lastProjectName");
+		setLastProject({ lastProjectId, lastProjectName });
 	}, []);
 
 	return (
@@ -53,7 +53,7 @@ export default function ProjectSelector() {
 						variant="contained"
 						sx={{ mt: 3, mb: 2 }}
 					>
-						Enter Project
+						Open up
 					</Button>
 					<Button
 						type="submit"
@@ -61,7 +61,7 @@ export default function ProjectSelector() {
 						variant="outlined"
 						sx={{ mt: 3, mb: 2 }}
 					>
-						Create new Project!
+						Create new Project
 					</Button>
 					<Grid container>
 						<Grid item>
@@ -76,9 +76,12 @@ export default function ProjectSelector() {
 									Open up a project and find a shortcut here next time.
 								</Typography>
 							) : (
-								<Link href="#" variant="body2">
-									{"Open up last Project: "}
-								</Link>
+								<>
+									<Typography variant="body2">Last project:</Typography>
+									<Link href="#" variant="body2">
+										{lastProject.lastProjectName}
+									</Link>
+								</>
 							)}
 						</Grid>
 					</Grid>

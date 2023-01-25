@@ -56,7 +56,7 @@ export default function SignUp() {
 								required
 								fullWidth
 								id="leaderName"
-								label="LleaderName"
+								label="Name of the leader"
 								name="leaderName"
 								autoComplete="family-name"
 							/>
@@ -73,7 +73,7 @@ export default function SignUp() {
 					<Grid container justifyContent="flex-end">
 						<Grid item>
 							<Link href="#" variant="body2">
-								Already have a project? Open it!
+								Already have a project? Open it here
 							</Link>
 						</Grid>
 					</Grid>
