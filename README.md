@@ -36,7 +36,7 @@ Now you're ready to test the app in your browser on localhost:3000
 
 ## About The Project
 
-- [ ] Open up a project - Allows you to open up existing project basing on its' ID. Module checks if there is saved Last Project in your localStorage - if so, there's a link provided to open up last project. 
+- [ ] Project Selector - Allows you to open up existing project basing on its' ID. Module checks if there is saved Last Project in your localStorage - if so, there's a link provided to open up last project. 
     
  ## Base structure of app
 
