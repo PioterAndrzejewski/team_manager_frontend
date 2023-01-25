@@ -13,7 +13,9 @@ function App() {
 	return (
 		<div className="App">
 			<ThemeProvider theme={theme}>
-				<Header title="Team Manager" />
+				<header>
+					<Header title="Team Manager" />
+				</header>
 				<ProjectSelector />
 				<CreateProject />
 				<ProjectManager />

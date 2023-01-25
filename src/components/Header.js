@@ -1,9 +1,9 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
 
 function Header(props) {
 	const { title } = props;
@@ -11,10 +11,19 @@ function Header(props) {
 	return (
 		<React.Fragment>
 			<Toolbar sx={{ borderBottom: 1, borderColor: "divider" }}>
-				<Button size="medium">
-					<GitHubIcon sx={{ pr: 0.5 }} />
-					GitHub
-				</Button>
+				<Toolbar>
+					<GitHubIcon sx={{ m: "5px" }} />
+					<Button size="medium">
+						<Link color="inherit" noWrap variant="body2" href="github.com">
+							BE
+						</Link>
+					</Button>
+					<Button size="medium">
+						<Link color="inherit" noWrap variant="body2" href="github.com">
+							FE
+						</Link>
+					</Button>
+				</Toolbar>
 
 				<Typography
 					component="h2"
