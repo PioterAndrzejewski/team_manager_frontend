@@ -49,6 +49,11 @@ export default function ProjectSelector() {
 		navigate("/manager");
 	};
 
+	const handleLinkClick = () => {
+		localStorage.setItem("useProjectId", localStorage.getItem("lastProjectId"));
+		navigate("/manager");
+	};
+
 	return (
 		<main>
 			<Container component="main" maxWidth="xs">
@@ -116,7 +121,13 @@ export default function ProjectSelector() {
 								) : (
 									<>
 										<Typography variant="body2">Last project:</Typography>
-										<Link href="#" variant="body2">
+										<Link
+											onClick={handleLinkClick}
+											variant="body2"
+											sx={{
+												cursor: "pointer",
+											}}
+										>
 											{lastProject.lastProjectName}
 										</Link>
 									</>

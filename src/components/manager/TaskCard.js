@@ -27,7 +27,7 @@ function TaskCard(props) {
 	const { teamMembers } = useTeam();
 
 	return (
-		<Grid item xs={12} md={6} sx={{ flexGrow: 1 }}>
+		<Grid item xs={12} md={6} sx={{ flexGrow: 1, m: 1 }}>
 			<Card sx={{ display: "flex" }}>
 				<CardContent
 					sx={{
@@ -41,15 +41,15 @@ function TaskCard(props) {
 					<Typography component="h2" variant="h5">
 						{taskName}
 					</Typography>
-					<Typography variant="subtitle1">{taskDescription}</Typography>
+					<Typography variant="subtitle1">{`${taskDescription}`}</Typography>
 					<Typography variant="caption" color="text.secondary">
-						Due date: {taskDueDate.toLocaleDateString()}
+						Due date: {`${taskDueDate}`}
 					</Typography>
 					<Box>
 						<Typography variant="caption" color="text.secondary">
 							Finished date:{" "}
 							{taskFinished
-								? taskFinishedDate.toLocaleDateString()
+								? `${taskFinishedDate}`
 								: "Task is not finished yet"}
 						</Typography>
 					</Box>

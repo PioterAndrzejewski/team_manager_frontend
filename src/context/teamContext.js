@@ -61,16 +61,24 @@ export const TeamProvider = ({ children }) => {
 		},
 	]);
 
-	const updateTeam = (fetchedData) => {};
+	const [projectId, setProjectId] = useState();
+
+	const updateTeam = (fetchedData) => {
+		localStorage.setItem("lastProjectId", fetchedData.projectId);
+		localStorage.setItem("lastProjectName", fetchedData.projectName);
+
+		setTeamMembers(fetchedData.projectMembers);
+		setTeamTasks(fetchedData.taskList);
+		setProjectId(fetchedData.projectId);
+	};
 
 	return (
 		<TeamContext.Provider
 			value={{
 				teamMembers,
-				setTeamMembers,
 				teamTasks,
-				setTeamTasks,
 				updateTeam,
+				projectId,
 			}}
 		>
 			{children}

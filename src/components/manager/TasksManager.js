@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import TaskCard from "./TaskCard";
+import NewTaskCard from "./NewTaskCard";
 
 import { useTeam } from "../../context/teamContext";
 
@@ -30,6 +31,7 @@ function TeamManager() {
 						Current tasks:
 					</Typography>
 					<Container sx={{ py: 8 }} maxWidth="md">
+						<NewTaskCard />
 						{teamTasks
 							.filter((task) => !task.taskFinished)
 							.map((task) => {

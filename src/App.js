@@ -9,6 +9,8 @@ import ProjectManager from "./components/manager/ProjectManager";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ErrorProvider } from "./context/errorContext";
+import { TeamProvider } from "./context/teamContext";
+
 const theme = createTheme();
 
 function App() {
@@ -19,12 +21,19 @@ function App() {
 					<header>
 						<Header title="Team Manager" />
 					</header>
-					<Routes>
-						<Route path="/" element={<ProjectSelector />} />
-						<Route path="createproject" element={<CreateProject />} />
-						<Route path="manager/*" element={<ProjectManager />} />
-					</Routes>
-					<Copyright sx={{ mt: 8, mb: 4 }} />
+					<main>
+						<TeamProvider>
+							<Routes>
+								<Route path="/" element={<ProjectSelector />} />
+								<Route path="createproject" element={<CreateProject />} />
+
+								<Route path="manager/*" element={<ProjectManager />} />
+							</Routes>
+						</TeamProvider>
+					</main>
+					<footer>
+						<Copyright sx={{ mt: 8, mb: 4 }} />
+					</footer>
 				</ErrorProvider>
 			</ThemeProvider>
 		</div>

@@ -3,6 +3,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Link from "@mui/material/Link";
 
 import { Link as RouterLink } from "react-router-dom";
+import { useTeam } from "../../context/teamContext";
 
 const sections = [
 	{ title: "Home screen", url: "/manager" },
@@ -12,6 +13,7 @@ const sections = [
 ];
 
 function SectionBar() {
+	const { projectId } = useTeam();
 	return (
 		<nav>
 			<Toolbar
@@ -29,7 +31,7 @@ function SectionBar() {
 						component={RouterLink}
 						to={section.url}
 					>
-						{index === 0 ? "Project ID: 555" : section.title}
+						{index === 0 ? `Project ID: ${projectId}` : section.title}
 					</Link>
 				))}
 			</Toolbar>

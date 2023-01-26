@@ -7,14 +7,13 @@ import TeamManager from "./TeamManager";
 import TasksManager from "./TasksManager";
 import TeamSettings from "./TeamSettings";
 
-import { TeamProvider } from "../../context/teamContext";
-
 import { useError } from "../../context/errorContext";
-
+import { useTeam } from "../../context/teamContext";
 import { useNavigate } from "react-router-dom";
 
 function ProjectManager() {
 	const { setError } = useError();
+	const { updateTeam } = useTeam();
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -37,6 +36,7 @@ function ProjectManager() {
 				message: "",
 			});
 			localStorage.setItem("lastProjectId", projectId);
+			updateTeam(response.data);
 		};
 
 		fetchProjectData();
@@ -44,14 +44,14 @@ function ProjectManager() {
 	}, []);
 
 	return (
-		<TeamProvider>
+		<>
 			<SectionBar />
 			<Routes>
 				<Route path="team" element={<TeamManager />} />
 				<Route path="tasks" element={<TasksManager />} />
 				<Route path="settings" element={<TeamSettings />} />
 			</Routes>
-		</TeamProvider>
+		</>
 	);
 }
 

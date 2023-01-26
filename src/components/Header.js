@@ -36,9 +36,8 @@ function Header(props) {
 				>
 					{title}
 				</Typography>
-
 				<Button variant="outlined" size="small" component={RouterLink} to="/">
-					Change Project
+					Welcome page
 				</Button>
 			</Toolbar>
 		</React.Fragment>
