@@ -1,5 +1,6 @@
 import * as React from "react";
 import FileUpload from "react-mui-fileuploader";
+import axios from "axios";
 
 import Modal from "@mui/material/Modal";
 import { useEffect, useState } from "react";
@@ -30,7 +31,7 @@ const style = {
 export default function TeamMemberModal(props) {
 	const [fileToUpload, setFileToUpload] = useState([]);
 
-	const { projectId } = useTeam();
+	const { projectId, updateTeamMembers } = useTeam();
 	const { teamModalOpen, setTeamModalOpen } = useModal();
 	const { error, setError } = useError();
 	const navigate = useNavigate();
@@ -56,18 +57,25 @@ export default function TeamMemberModal(props) {
 			setError({ is: true, message: "You need to upload avatar" });
 			return;
 		}
-		let formData = new FormData();
-		formData.append("projectId", projectId);
-		formData.append("newMemberName", inputValue);
-		formData.append("newMemberAvatar", fileToUpload);
-
-		fetch("http://127.0.0.1:3636/addmember", {
-			method: "POST",
-			body: formData,
-		});
-
-		setError({ is: false, message: "" });
-		navigate("/manager/team");
+		const handleFetch = async () => {
+			let formData = new FormData();
+			formData.append("projectId", projectId);
+			formData.append("newMemberName", inputValue);
+			const fileExtension = fileToUpload[0].name.split(".")[1];
+			formData.append("fileExtension", fileExtension);
+			formData.append("avatar", fileToUpload[0]);
+			const response = await axios({
+				method: "post",
+				url: "http://127.0.0.1:3636/addmember",
+				data: formData,
+				headers: { "Content-Type": "multipart/form-data" },
+			});
+			console.log(response);
+			updateTeamMembers(response.data.projectMembers);
+			setError({ is: false, message: "" });
+			handleClose();
+		};
+		handleFetch();
 	};
 
 	return (

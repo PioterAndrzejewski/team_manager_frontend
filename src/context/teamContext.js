@@ -72,6 +72,10 @@ export const TeamProvider = ({ children }) => {
 		setProjectId(fetchedData.projectId);
 	};
 
+	const updateTeamMembers = (projectMembers) => {
+		setTeamMembers(projectMembers);
+	};
+
 	return (
 		<TeamContext.Provider
 			value={{
@@ -79,6 +83,7 @@ export const TeamProvider = ({ children }) => {
 				teamTasks,
 				updateTeam,
 				projectId,
+				updateTeamMembers,
 			}}
 		>
 			{children}
