@@ -1,4 +1,8 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
+
+import axios from "axios";
+
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -10,16 +14,44 @@ import AddCircleOutline from "@mui/icons-material/AddCircleOutline";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Link as RouterLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
-	const handleSubmit = (event) => {
+	const navigate = useNavigate();
+
+	const [formEntries, setFormEntries] = useState(undefined);
+
+	const handleSubmit = async (event) => {
 		event.preventDefault();
-		const data = new FormData(event.currentTarget);
-		console.log({
-			email: data.get("email"),
-			password: data.get("password"),
-		});
+		const dataFromForm = new FormData(event.currentTarget);
+		const newFormEntries = {
+			projectName: dataFromForm.get("projectName"),
+			leaderName: dataFromForm.get("leaderName"),
+		};
+		setFormEntries(newFormEntries);
 	};
+
+	useEffect(() => {
+		console.log("robie useefekt");
+		console.log(formEntries);
+		const fetchCreateProject = async () => {
+			const response = await axios.post(
+				"http://127.0.0.1:3636/createproject",
+				formEntries
+			);
+			console.log(response.data);
+			if (response.data.creationSuccess) {
+				localStorage.setItem("lastProjectId", response.data.projectId);
+				localStorage.setItem("lastProjectName", response.data.projectName);
+				navigate("/manager");
+			}
+		};
+
+		if (formEntries !== undefined) {
+			console.log("przechodzę warunek");
+			fetchCreateProject();
+		}
+	}, [formEntries]);
 
 	return (
 		<main>

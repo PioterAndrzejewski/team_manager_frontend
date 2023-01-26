@@ -8,8 +8,6 @@ import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
-import { useTeam } from "../context/teamContext";
-
 function TeamMemberCard({ teamMember }) {
 	return (
 		<Grid item key={teamMember} xs={12} sm={6} md={4}>

@@ -5,7 +5,7 @@ import Header from "./components/Header";
 import ProjectSelector from "./components/ProjectSelector";
 import CreateProject from "./components/CreateProject";
 import Copyright from "./components/Copyright";
-import ProjectManager from "./components/ProjectManager";
+import ProjectManager from "./components/manager/ProjectManager";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 const theme = createTheme();
@@ -19,8 +19,8 @@ function App() {
 				</header>
 				<Routes>
 					<Route path="/" element={<ProjectSelector />} />
-					<Route path="/createproject" element={<CreateProject />} />
-					<Route path="/manager" element={<ProjectManager />} />
+					<Route path="createproject" element={<CreateProject />} />
+					<Route path="manager/*" element={<ProjectManager />} />
 				</Routes>
 				<Copyright sx={{ mt: 8, mb: 4 }} />
 			</ThemeProvider>

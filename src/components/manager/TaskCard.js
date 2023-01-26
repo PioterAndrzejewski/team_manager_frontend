@@ -11,7 +11,7 @@ import CheckCircleOutlineSharpIcon from "@mui/icons-material/CheckCircleOutlineS
 import TeamMemberCardSmall from "./TeamMemberCardSmall";
 import TeamMemberNewCardSmall from "./TeamMemberNewCardSmall";
 
-import { useTeam } from "../context/teamContext";
+import { useTeam } from "../../context/teamContext";
 
 function TaskCard(props) {
 	const {
