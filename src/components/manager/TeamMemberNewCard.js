@@ -8,8 +8,15 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 import avatar from "../../images/avatar.jpg";
+import { useModal } from "../../context/modalContext";
 
 function TeamMemberNewCard() {
+	const { setTeamModalOpen } = useModal();
+
+	const handleCardClick = () => {
+		setTeamModalOpen(true);
+	};
+
 	return (
 		<Grid item xs={12} sm={6} md={4}>
 			<Card
@@ -23,6 +30,7 @@ function TeamMemberNewCard() {
 						transform: "scale(104%)",
 					},
 				}}
+				onClick={handleCardClick}
 			>
 				<CardMedia
 					component="img"

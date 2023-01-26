@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import TeamMemberCard from "./TeamMemberCard";
 import TeamMemberNewCard from "./TeamMemberNewCard";
+import TeamMemberModal from "./modals/TeamMemberModal";
 
 import { useTeam } from "../../context/teamContext";
 
@@ -16,6 +17,7 @@ function TeamManager() {
 	return (
 		<>
 			<main>
+				<TeamMemberModal />
 				<Box
 					sx={{
 						bgcolor: "background.paper",

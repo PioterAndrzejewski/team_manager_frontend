@@ -10,6 +10,7 @@ import ProjectManager from "./components/manager/ProjectManager";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ErrorProvider } from "./context/errorContext";
 import { TeamProvider } from "./context/teamContext";
+import { ModalProvider } from "./context/modalContext";
 
 const theme = createTheme();
 
@@ -23,12 +24,14 @@ function App() {
 					</header>
 					<main>
 						<TeamProvider>
-							<Routes>
-								<Route path="/" element={<ProjectSelector />} />
-								<Route path="createproject" element={<CreateProject />} />
+							<ModalProvider>
+								<Routes>
+									<Route path="/" element={<ProjectSelector />} />
+									<Route path="createproject" element={<CreateProject />} />
 
-								<Route path="manager/*" element={<ProjectManager />} />
-							</Routes>
+									<Route path="manager/*" element={<ProjectManager />} />
+								</Routes>
+							</ModalProvider>
 						</TeamProvider>
 					</main>
 					<footer>

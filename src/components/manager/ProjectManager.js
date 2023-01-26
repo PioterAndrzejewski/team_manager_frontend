@@ -35,7 +35,7 @@ function ProjectManager() {
 				is: false,
 				message: "",
 			});
-			localStorage.setItem("lastProjectId", projectId);
+
 			updateTeam(response.data);
 		};
 
