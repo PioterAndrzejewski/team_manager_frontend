@@ -13,6 +13,7 @@ import Box from "@mui/material/Box";
 import AddCircleOutline from "@mui/icons-material/AddCircleOutline";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import Alert from "@mui/material/Alert";
 import { Link as RouterLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -20,6 +21,8 @@ export default function SignUp() {
 	const navigate = useNavigate();
 
 	const [formEntries, setFormEntries] = useState(undefined);
+	const [isError, setIsError] = useState(false);
+	const [errorMessage, setErrorMessage] = useState("");
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
@@ -32,26 +35,31 @@ export default function SignUp() {
 	};
 
 	useEffect(() => {
-		console.log("robie useefekt");
-		console.log(formEntries);
 		const fetchCreateProject = async () => {
 			const response = await axios.post(
 				"http://127.0.0.1:3636/createproject",
 				formEntries
 			);
-			console.log(response.data);
+
 			if (response.data.creationSuccess) {
 				localStorage.setItem("lastProjectId", response.data.projectId);
+				localStorage.setItem("useProjectId", response.data.projectId);
 				localStorage.setItem("lastProjectName", response.data.projectName);
+				setErrorMessage("");
+				setIsError(false);
 				navigate("/manager");
+			}
+
+			if (!response.data.creationSuccess) {
+				setErrorMessage(response.data.message);
+				setIsError(true);
 			}
 		};
 
 		if (formEntries !== undefined) {
-			console.log("przechodzę warunek");
 			fetchCreateProject();
 		}
-	}, [formEntries]);
+	}, [formEntries, navigate]);
 
 	return (
 		<main>
@@ -77,6 +85,11 @@ export default function SignUp() {
 						onSubmit={handleSubmit}
 						sx={{ mt: 3 }}
 					>
+						{isError && (
+							<Alert severity="error" sx={{ m: 5 }}>
+								{errorMessage}
+							</Alert>
+						)}
 						<Grid container spacing={2}>
 							<Grid item xs={12} sm={6}>
 								<TextField

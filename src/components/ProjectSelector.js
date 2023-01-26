@@ -10,19 +10,44 @@ import Box from "@mui/material/Box";
 import ManageAccounts from "@mui/icons-material/ManageAccounts";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import Alert from "@mui/material/Alert";
 
 import { Link as RouterLink } from "react-router-dom";
+
+import { useError } from "../context/errorContext";
+
+import { useNavigate } from "react-router-dom";
 
 export default function ProjectSelector() {
 	const [lastProject, setLastProject] = useState({
 		lastProjectId: null,
 		lastProjectName: null,
 	});
+	const [inputValue, setInputValue] = useState("");
+
+	const { error, setError } = useError();
+	const navigate = useNavigate();
+
 	useEffect(() => {
 		const lastProjectId = localStorage.getItem("lastProjectId");
 		const lastProjectName = localStorage.getItem("lastProjectName");
 		setLastProject({ lastProjectId, lastProjectName });
 	}, []);
+
+	const handleChange = (e) => {
+		setInputValue(e.target.value.replace(/[^0-9]/g, ""));
+	};
+
+	const handleButton = (e) => {
+		e.preventDefault();
+		if (inputValue.length < 4) {
+			setError({ is: true, message: "ID has at least 4 digits" });
+			return;
+		}
+		setError({ is: false, message: "" });
+		localStorage.setItem("useProjectId", inputValue);
+		navigate("/manager");
+	};
 
 	return (
 		<main>
@@ -42,22 +67,28 @@ export default function ProjectSelector() {
 					<Typography component="h1" variant="h5">
 						Open existing project
 					</Typography>
+					{error.is && (
+						<Alert severity="error" sx={{ m: 5 }}>
+							{error.message}
+						</Alert>
+					)}
 					<Box component="form" noValidate sx={{ mt: 1 }}>
 						<TextField
 							margin="normal"
 							required
 							fullWidth
-							id="email"
+							id="projectId"
 							label="Team Project ID"
-							name="email"
-							autoComplete="email"
-							autoFocus
+							name="projectId"
+							value={inputValue}
+							onChange={handleChange}
 						/>
 						<Button
 							type="submit"
 							fullWidth
 							variant="contained"
 							sx={{ mt: 3, mb: 2 }}
+							onClick={handleButton}
 						>
 							Open up
 						</Button>
