@@ -21,14 +21,14 @@ function TeamManager() {
 				<Box
 					sx={{
 						bgcolor: "background.paper",
-						pt: 8,
-						pb: 6,
+						pt: 0.5,
+						pb: 0.5,
 					}}
 				>
 					<Container maxWidth="sm">
 						<Typography
 							component="h1"
-							variant="h2"
+							variant="h3"
 							align="center"
 							color="text.primary"
 							gutterBottom

@@ -13,14 +13,30 @@ function Header(props) {
 		<React.Fragment>
 			<Toolbar sx={{ borderBottom: 1, borderColor: "divider" }}>
 				<Toolbar>
-					<GitHubIcon sx={{ m: "5px" }} />
+					<GitHubIcon sx={{ m: "5px" }} color="primary" />
 					<Button size="medium">
-						<Link color="inherit" noWrap variant="body2" href="github.com">
+						<Link
+							noWrap
+							variant="body2"
+							href="https://github.com/PioterAndrzejewski/team_manager_backend"
+							sx={{
+								textDecoration: "none",
+								color: "primary",
+							}}
+						>
 							BE
 						</Link>
 					</Button>
 					<Button size="medium">
-						<Link color="inherit" noWrap variant="body2" href="github.com">
+						<Link
+							noWrap
+							variant="body2"
+							href="https://github.com/PioterAndrzejewski/team_manager_frontend"
+							sx={{
+								textDecoration: "none",
+								color: "primary",
+							}}
+						>
 							FE
 						</Link>
 					</Button>

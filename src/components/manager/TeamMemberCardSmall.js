@@ -24,9 +24,9 @@ function TeamMemberCardSmall({ teamMember }) {
 				<CardContent sx={{ border: "none" }}>
 					<CardMedia
 						component="img"
-						image={teamMember.memberImageURL}
 						alt="random"
 						sx={{ borderRadius: "50%" }}
+						image={teamMember.memberImageURL ?? "#"}
 					/>
 
 					<Typography gutterBottom variant="caption" component="h4">

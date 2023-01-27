@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -8,7 +9,30 @@ import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
+import { useTeam } from "../../context/teamContext";
+
 function TeamMemberCard({ teamMember }) {
+	const { projectId, updateTeamMembers, teamMembers } = useTeam();
+	const handleRemoveButton = (e) => {
+		e.preventDefault();
+		const confirm = prompt(
+			`You are going to remove ${teamMember.memberName}. Are you sure? This action is irreversivibili ki tili kili bible.
+			If yes, write "remove"`
+		);
+		if (!confirm === "remove") {
+			console.log("to kończę");
+			return;
+		}
+
+		const handleFetch = async () => {
+			const response = await axios.post("http://127.0.0.1:3636/removemember", {
+				projectId,
+				removeMemberId: teamMember.memberId,
+			});
+		};
+		handleFetch();
+	};
+
 	return (
 		<Grid item key={teamMember} xs={12} sm={6} md={4}>
 			<Card
@@ -38,7 +62,7 @@ function TeamMemberCard({ teamMember }) {
 				<CardActions>
 					<Button size="small">View tasks</Button>
 					<Button size="small">Edit</Button>
-					<Button size="small" color="error">
+					<Button size="small" color="error" onClick={handleRemoveButton}>
 						Remove
 					</Button>
 				</CardActions>
