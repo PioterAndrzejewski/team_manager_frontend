@@ -6,11 +6,26 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import Link from "@mui/material/Link";
 import CardContent from "@mui/material/CardContent";
-import CheckCircleOutlineSharpIcon from "@mui/icons-material/CheckCircleOutlineSharp";
+
+import { useModal } from "../../context/modalContext";
 
 function NewTaskCard(props) {
+	const { setTaskModalOpen, setModalMode } = useModal();
+
+	const handleNewTask = () => {
+		console.log("otwieram?");
+		setModalMode("create");
+		setTaskModalOpen(true);
+	};
+
 	return (
-		<Grid item xs={12} md={6} sx={{ flexGrow: 1, m: 1 }}>
+		<Grid
+			item
+			xs={12}
+			md={6}
+			sx={{ flexGrow: 1, m: 1 }}
+			onClick={handleNewTask}
+		>
 			<Card
 				sx={{
 					display: "flex",

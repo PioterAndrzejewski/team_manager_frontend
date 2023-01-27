@@ -3,7 +3,7 @@ import FileUpload from "react-mui-fileuploader";
 import axios from "axios";
 
 import Modal from "@mui/material/Modal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -13,7 +13,6 @@ import Alert from "@mui/material/Alert";
 import { useModal } from "../../../context/modalContext";
 import { useError } from "../../../context/errorContext";
 import { useTeam } from "../../../context/teamContext";
-import { useNavigate } from "react-router-dom";
 
 const style = {
 	position: "absolute",
@@ -58,13 +57,16 @@ export default function TeamMemberModal() {
 		}
 		const handleFetch = async () => {
 			let formData = new FormData();
-			formData.append("projectId", projectId);
-			formData.append("memberName", inputValue);
 			const fileExtension = fileToUpload[0].name.split(".")[1];
 			formData.append("fileExtension", fileExtension);
+			formData.append("projectId", projectId);
+			formData.append("memberName", inputValue);
 			formData.append("avatar", fileToUpload[0]);
 			formData.append("mode", modalMode);
-			formData.append("memberToEditId", teamMemberToEdit.id);
+			if (modalMode === "edit") {
+				formData.append("memberToEditId", teamMemberToEdit.id);
+			}
+
 			const response = await axios({
 				method: "post",
 				url: "http://127.0.0.1:3636/member",

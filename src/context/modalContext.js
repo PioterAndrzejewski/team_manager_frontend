@@ -4,6 +4,7 @@ const ModalContext = createContext(undefined);
 
 export const ModalProvider = ({ children }) => {
 	const [teamModalOpen, setTeamModalOpen] = useState(false);
+	const [taskModalOpen, setTaskModalOpen] = useState(false);
 	const [teamMemberToEdit, setTeamMemberToEdit] = useState();
 	const [modalMode, setModalMode] = useState("create");
 
@@ -16,6 +17,8 @@ export const ModalProvider = ({ children }) => {
 				setModalMode,
 				teamMemberToEdit,
 				setTeamMemberToEdit,
+				taskModalOpen,
+				setTaskModalOpen,
 			}}
 		>
 			{children}

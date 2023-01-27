@@ -31,11 +31,11 @@ function TeamMemberCardSmall({ memberId }) {
 						component="img"
 						alt="random"
 						sx={{ borderRadius: "50%" }}
-						image={teamMembers[memberIndex].memberImageURL}
+						// image={teamMembers[memberIndex].memberImageURL}
 					/>
 
 					<Typography gutterBottom variant="caption" component="h4">
-						{teamMembers[memberIndex].memberName}
+						{/* {teamMembers[memberIndex].memberName} */}
 					</Typography>
 				</CardContent>
 			</Card>

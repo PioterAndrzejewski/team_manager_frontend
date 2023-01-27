@@ -1,12 +1,14 @@
 import React from "react";
-import Box from "@mui/material/Box";
 
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import TaskCard from "./TaskCard";
 import NewTaskCard from "./NewTaskCard";
+import TaskModal from "./modals/TaskModal";
 
 import { useTeam } from "../../context/teamContext";
+
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
 
 function TeamManager() {
 	const { teamTasks } = useTeam();
@@ -14,6 +16,7 @@ function TeamManager() {
 	return (
 		<>
 			<main>
+				<TaskModal />
 				<Box
 					sx={{
 						bgcolor: "background.paper",

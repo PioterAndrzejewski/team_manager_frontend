@@ -22,11 +22,16 @@ export const TeamProvider = ({ children }) => {
 		setTeamMembers(projectMembers);
 	};
 
+	const updateTasks = (teamTasks) => {
+		setTeamTasks(teamTasks);
+	};
+
 	return (
 		<TeamContext.Provider
 			value={{
 				teamMembers,
 				teamTasks,
+				updateTasks,
 				updateTeam,
 				projectId,
 				updateTeamMembers,
