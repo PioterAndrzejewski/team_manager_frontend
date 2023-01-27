@@ -81,9 +81,7 @@ function TaskCard(props) {
 							{taskAssignees.map((assignee) => {
 								return (
 									<TeamMemberCardSmall
-										teamMember={teamMembers.find(
-											(teamMember) => teamMember.memberId === assignee
-										)}
+										teamMemberId={assignee.memberId}
 										key={assignee.memberId}
 									/>
 								);

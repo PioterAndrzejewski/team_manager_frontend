@@ -29,6 +29,8 @@ function TeamMemberCard({ teamMember }) {
 				projectId,
 				removeMemberId: teamMember.memberId,
 			});
+
+			updateTeamMembers(response.data.projectMembers);
 		};
 		handleFetch();
 	};

@@ -6,11 +6,16 @@ import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
-function TeamMemberCardSmall({ teamMember }) {
+import { useTeam } from "../../context/teamContext";
+
+function TeamMemberCardSmall({ memberId }) {
+	const { teamMembers } = useTeam();
+
+	const memberIndex = teamMembers.findIndex((member) => member.id === memberId);
+
 	return (
 		<Grid
 			item
-			key={teamMember}
 			sx={{
 				width: "60px",
 			}}
@@ -26,11 +31,11 @@ function TeamMemberCardSmall({ teamMember }) {
 						component="img"
 						alt="random"
 						sx={{ borderRadius: "50%" }}
-						image={teamMember.memberImageURL ?? "#"}
+						image={teamMembers[memberIndex].memberImageURL}
 					/>
 
 					<Typography gutterBottom variant="caption" component="h4">
-						{teamMember.memberName}
+						{teamMembers[memberIndex].memberName}
 					</Typography>
 				</CardContent>
 			</Card>
