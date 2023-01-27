@@ -11,9 +11,10 @@ import avatar from "../../images/avatar.jpg";
 import { useModal } from "../../context/modalContext";
 
 function TeamMemberNewCard() {
-	const { setTeamModalOpen } = useModal();
+	const { setTeamModalOpen, setModalMode } = useModal();
 
 	const handleCardClick = () => {
+		setModalMode("create");
 		setTeamModalOpen(true);
 	};
 

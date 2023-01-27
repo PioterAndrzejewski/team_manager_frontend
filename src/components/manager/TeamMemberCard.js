@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import Button from "@mui/material/Button";
@@ -10,29 +10,47 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 import { useTeam } from "../../context/teamContext";
+import { useModal } from "../../context/modalContext";
 
 function TeamMemberCard({ teamMember }) {
 	const { projectId, updateTeamMembers, teamMembers } = useTeam();
-	const handleRemoveButton = (e) => {
-		e.preventDefault();
-		const confirm = prompt(
-			`You are going to remove ${teamMember.memberName}. Are you sure? This action is irreversivibili ki tili kili bible.
-			If yes, write "remove"`
-		);
-		if (!confirm === "remove") {
-			console.log("to kończę");
-			return;
-		}
+	const [removeId, setRemoveId] = useState(undefined);
+	const { teamModalOpen, setTeamModalOpen, setModalMode, setTeamMemberToEdit } =
+		useModal();
 
+	useEffect(() => {
 		const handleFetch = async () => {
 			const response = await axios.post("http://127.0.0.1:3636/removemember", {
 				projectId,
 				removeMemberId: teamMember.memberId,
 			});
-
 			updateTeamMembers(response.data.projectMembers);
 		};
-		handleFetch();
+		if (removeId != undefined) {
+			handleFetch();
+			setRemoveId(undefined);
+		}
+	}, [removeId]);
+
+	const handleRemoveButton = (e) => {
+		e.preventDefault();
+		const confirm = prompt(
+			`You are going to remove ${teamMember.memberName}. Are you sure? This action is irreversibikible.
+			Please write "remove" to confirm`
+		);
+		if (confirm === "remove") {
+			setRemoveId(teamMember.memberId);
+		}
+	};
+
+	const handleEditButton = (e) => {
+		e.preventDefault();
+		setModalMode("edit");
+		setTeamMemberToEdit({
+			id: teamMember.memberId,
+			name: teamMember.memberName,
+		});
+		setTeamModalOpen(true);
 	};
 
 	return (
@@ -63,7 +81,9 @@ function TeamMemberCard({ teamMember }) {
 				</CardContent>
 				<CardActions>
 					<Button size="small">View tasks</Button>
-					<Button size="small">Edit</Button>
+					<Button size="small" onClick={handleEditButton}>
+						Edit
+					</Button>
 					<Button size="small" color="error" onClick={handleRemoveButton}>
 						Remove
 					</Button>

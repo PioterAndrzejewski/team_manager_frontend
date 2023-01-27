@@ -35,7 +35,7 @@ function TeamManager() {
 						{teamTasks
 							.filter((task) => !task.taskFinished)
 							.map((task) => {
-								return <TaskCard taskData={task} />;
+								return <TaskCard taskData={task} key={task.taskId} />;
 							})}
 					</Container>
 				</Box>
@@ -60,7 +60,7 @@ function TeamManager() {
 						{teamTasks
 							.filter((task) => task.taskFinished)
 							.map((task) => {
-								return <TaskCard taskData={task} />;
+								return <TaskCard taskData={task} key={task.taskId} />;
 							})}
 					</Container>
 				</Box>

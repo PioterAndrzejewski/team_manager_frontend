@@ -23,7 +23,6 @@ function ProjectManager() {
 				`http://127.0.0.1:3636/project/${projectId}`
 			);
 			if (!response.data.projectExists) {
-				console.log("no wchodzę do warunku");
 				navigate("/");
 				setError({
 					is: true,

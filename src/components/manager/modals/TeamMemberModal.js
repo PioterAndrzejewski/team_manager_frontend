@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import ManageAccounts from "@mui/icons-material/ManageAccounts";
 import Typography from "@mui/material/Typography";
 import Alert from "@mui/material/Alert";
 
@@ -28,17 +27,17 @@ const style = {
 	p: 4,
 };
 
-export default function TeamMemberModal(props) {
-	const [fileToUpload, setFileToUpload] = useState([]);
-
-	const { projectId, updateTeamMembers } = useTeam();
-	const { teamModalOpen, setTeamModalOpen } = useModal();
+export default function TeamMemberModal() {
+	const { projectId, updateTeamMembers, teamMembers } = useTeam();
+	const { teamModalOpen, setTeamModalOpen, modalMode, teamMemberToEdit } =
+		useModal();
 	const { error, setError } = useError();
-	const navigate = useNavigate();
+
+	const [fileToUpload, setFileToUpload] = useState([]);
+	const [inputValue, setInputValue] = useState("");
 
 	const handleClose = () => setTeamModalOpen(false);
 
-	const [inputValue, setInputValue] = useState("");
 	const handleChange = (e) => {
 		setInputValue(e.target.value);
 	};
@@ -60,16 +59,19 @@ export default function TeamMemberModal(props) {
 		const handleFetch = async () => {
 			let formData = new FormData();
 			formData.append("projectId", projectId);
-			formData.append("newMemberName", inputValue);
+			formData.append("memberName", inputValue);
 			const fileExtension = fileToUpload[0].name.split(".")[1];
 			formData.append("fileExtension", fileExtension);
 			formData.append("avatar", fileToUpload[0]);
+			formData.append("mode", modalMode);
+			formData.append("memberToEditId", teamMemberToEdit.id);
 			const response = await axios({
 				method: "post",
-				url: "http://127.0.0.1:3636/addmember",
+				url: "http://127.0.0.1:3636/member",
 				data: formData,
 				headers: { "Content-Type": "multipart/form-data" },
 			});
+
 			updateTeamMembers(response.data.projectMembers);
 			setError({ is: false, message: "" });
 			handleClose();
@@ -87,7 +89,9 @@ export default function TeamMemberModal(props) {
 			>
 				<Box sx={style}>
 					<Typography component="h1" variant="h5">
-						Create new member
+						{modalMode === "create"
+							? "Create new member"
+							: `Edit member ${teamMemberToEdit.name}`}
 					</Typography>
 					{error.is && (
 						<Alert severity="error" sx={{ m: 5 }}>
@@ -107,9 +111,13 @@ export default function TeamMemberModal(props) {
 							margin="normal"
 							required
 							fullWidth
-							id="newMemberName"
-							label="New member name"
-							name="newMemberName"
+							id="memberName"
+							label={
+								modalMode === "create"
+									? "New member name"
+									: `New name for: ${teamMemberToEdit.name}`
+							}
+							name="memberName"
 							value={inputValue}
 							onChange={handleChange}
 						/>
@@ -120,7 +128,7 @@ export default function TeamMemberModal(props) {
 							sx={{ mt: 3, mb: 2 }}
 							onClick={handleButton}
 						>
-							Create teammate!
+							{modalMode === "create" ? "Create member" : `Edit member`}
 						</Button>
 					</Box>
 				</Box>

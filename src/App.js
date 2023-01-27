@@ -6,19 +6,27 @@ import ProjectSelector from "./components/ProjectSelector";
 import CreateProject from "./components/CreateProject";
 import Copyright from "./components/Copyright";
 import ProjectManager from "./components/manager/ProjectManager";
+import CssBaseline from "@mui/material/CssBaseline";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ErrorProvider } from "./context/errorContext";
 import { TeamProvider } from "./context/teamContext";
 import { ModalProvider } from "./context/modalContext";
 
-const theme = createTheme();
+const themeLight = createTheme({
+	palette: {
+		background: {
+			default: "#eaeaea",
+		},
+	},
+});
 
 function App() {
 	return (
 		<div className="App">
-			<ThemeProvider theme={theme}>
+			<ThemeProvider theme={themeLight}>
 				<ErrorProvider>
+					<CssBaseline />
 					<header>
 						<Header title="Team Manager" />
 					</header>
