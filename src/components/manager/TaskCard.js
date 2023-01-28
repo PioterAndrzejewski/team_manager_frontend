@@ -13,25 +13,28 @@ import CheckCircleOutlineSharpIcon from "@mui/icons-material/CheckCircleOutlineS
 
 import TeamMemberCardSmall from "./TeamMemberCardSmall";
 import TeamMemberNewCardSmall from "./TeamMemberNewCardSmall";
+import NewAssigneeMenu from "./NewAssigneeMenu";
+import TaskAssignees from "./TaskAssignees";
 
+import { useAssignee } from "../../context/assigneeContext";
 import { useTeam } from "../../context/teamContext";
 import { useModal } from "../../context/modalContext";
 
-function TaskCard(props) {
+function TaskCard({ taskId }) {
 	const [editId, setEditId] = useState(undefined);
 	const [mode, setMode] = useState(undefined);
 
-	const { projectId, updateTasks } = useTeam();
-	const { changeTaskToEdit, setEditTaskModalOpen, setModalMode } = useModal();
+	const { projectId, updateTasks, teamTasks } = useTeam();
+	const { setEditTaskModalOpen, setModalMode } = useModal();
+
 	const {
-		taskId,
 		taskName,
 		taskDescription,
+		taskAssignees,
 		taskDueDate,
 		taskFinished,
 		taskFinishedDate,
-		taskAssignees,
-	} = props.taskData;
+	} = teamTasks[taskId];
 
 	useEffect(() => {
 		const handleFetch = async () => {
@@ -52,20 +55,12 @@ function TaskCard(props) {
 
 	const handleEditButton = (e) => {
 		setModalMode("edit");
-		changeTaskToEdit({
-			taskId,
-			taskName,
-			taskDescription,
-			taskDueDate,
-			taskFinished,
-			taskFinishedDate,
-		});
 		setEditTaskModalOpen(true);
 	};
 
 	const handleRemoveButton = (e) => {
 		const confirm = prompt(
-			`You are going to remove task: "${taskName}". Are you sure? This action is irreversibikible.
+			`You are going to remove task: "${teamTasks[taskId].taskName}". Are you sure? This action is irreversibikible.
 			Please write "remove" to confirm`
 		);
 		if (confirm === "remove") {
@@ -76,7 +71,7 @@ function TaskCard(props) {
 
 	const handleSetFinishButton = (e) => {
 		setEditId(taskId);
-		if (taskFinished) {
+		if (teamTasks[taskId].taskFinished) {
 			setMode("setunfinished");
 			return;
 		}
@@ -100,13 +95,16 @@ function TaskCard(props) {
 					</Typography>
 					<Typography variant="subtitle1">{`${taskDescription}`}</Typography>
 					<Typography variant="caption" color="text.secondary">
-						Due date: {`${moment(taskDueDate).format("DD-MM-YYYY")}`}
+						Due date:{" "}
+						{`${moment(teamTasks[taskId].taskDueDate).format("DD-MM-YYYY")}`}
 					</Typography>
 					<Box>
 						<Typography variant="caption" color="text.secondary">
 							Finished date:{" "}
-							{taskFinished
-								? `${moment(taskFinishedDate).format("DD-MM-YYYY")}`
+							{teamTasks[taskId].taskFinished
+								? `${moment(teamTasks[taskId].taskFinishedDate).format(
+										"DD-MM-YYYY"
+								  )}`
 								: "Task is not finished yet"}
 						</Typography>
 					</Box>
@@ -114,7 +112,7 @@ function TaskCard(props) {
 						<Button
 							size="small"
 							sx={{
-								transition: "0.02s",
+								transition: "0.2s",
 								"&:hover": {
 									transform: "scale(110%)",
 									backgroundColor: "#DDEDF0",
@@ -149,51 +147,13 @@ function TaskCard(props) {
 								},
 							}}
 						>
-							{taskFinished ? "Mark as unfinished" : "Mark as finished"}
+							{teamTasks[taskId].taskFinished
+								? "Mark as unfinished"
+								: "Mark as finished"}
 						</Button>
 					</Box>
 				</CardContent>
-
-				<CardContent
-					sx={{
-						display: "flex",
-						flexGrow: 0,
-						flexDirection: "column",
-						justifyContent: "space-between",
-						width: "30%",
-					}}
-				>
-					<Box>
-						<Typography component="span" variant="body2" color="text.secondary">
-							Assignees
-						</Typography>
-						<Box sx={{ display: "flex" }}>
-							{taskAssignees.map((assignee) => {
-								return (
-									<TeamMemberCardSmall
-										teamMemberId={assignee.memberId}
-										key={assignee.memberId}
-									/>
-								);
-							})}
-							<TeamMemberNewCardSmall />
-						</Box>
-					</Box>
-
-					<Button
-						size="medium"
-						onClick={handleSetFinishButton}
-						sx={{
-							transition: "0.1s",
-							"&:hover": {
-								transform: "scale(115%)",
-							},
-						}}
-					>
-						<CheckCircleOutlineSharpIcon sx={{ m: "5px" }} />
-						{taskFinished ? "UNFINISHED" : "FINISHED"}
-					</Button>
-				</CardContent>
+				<TaskAssignees taskId={taskId}></TaskAssignees>
 			</Card>
 		</Grid>
 	);

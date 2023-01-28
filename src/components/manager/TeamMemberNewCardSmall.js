@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 
 function TeamMemberNewCardSmall() {
 	return (
-		<Grid item sx={{}}>
+		<Grid item sx={{ cursor: "pointer" }}>
 			<Card
 				sx={{
 					display: "flex",

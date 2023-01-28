@@ -13,6 +13,8 @@ import { ErrorProvider } from "./context/errorContext";
 import { TeamProvider } from "./context/teamContext";
 import { ModalProvider } from "./context/modalContext";
 
+import { AssigneeProvider } from "./context/assigneeContext";
+
 const themeLight = createTheme({
 	palette: {
 		background: {
@@ -33,11 +35,13 @@ function App() {
 					<main>
 						<TeamProvider>
 							<ModalProvider>
-								<Routes>
-									<Route path="/" element={<ProjectSelector />} />
-									<Route path="createproject" element={<CreateProject />} />
-									<Route path="manager/*" element={<ProjectManager />} />
-								</Routes>
+								<AssigneeProvider>
+									<Routes>
+										<Route path="/" element={<ProjectSelector />} />
+										<Route path="createproject" element={<CreateProject />} />
+										<Route path="manager/*" element={<ProjectManager />} />
+									</Routes>
+								</AssigneeProvider>
 							</ModalProvider>
 						</TeamProvider>
 					</main>
