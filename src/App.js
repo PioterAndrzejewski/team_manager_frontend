@@ -36,7 +36,6 @@ function App() {
 								<Routes>
 									<Route path="/" element={<ProjectSelector />} />
 									<Route path="createproject" element={<CreateProject />} />
-
 									<Route path="manager/*" element={<ProjectManager />} />
 								</Routes>
 							</ModalProvider>

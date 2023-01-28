@@ -23,7 +23,7 @@ function NewTaskCard(props) {
 			item
 			xs={12}
 			md={6}
-			sx={{ flexGrow: 1, m: 1 }}
+			sx={{ flexGrow: 1, m: 1, cursor: "pointer" }}
 			onClick={handleNewTask}
 		>
 			<Card

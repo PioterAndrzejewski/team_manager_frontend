@@ -1,8 +1,10 @@
 import React from "react";
+import { useMemo } from "react";
 
 import TaskCard from "./TaskCard";
 import NewTaskCard from "./NewTaskCard";
 import TaskModal from "./modals/TaskModal";
+import EditTaskModal from "./modals/EditTaskModal";
 
 import { useTeam } from "../../context/teamContext";
 
@@ -17,6 +19,7 @@ function TeamManager() {
 		<>
 			<main>
 				<TaskModal />
+				<EditTaskModal />
 				<Box
 					sx={{
 						bgcolor: "background.paper",
@@ -42,7 +45,6 @@ function TeamManager() {
 							})}
 					</Container>
 				</Box>
-
 				<Box
 					sx={{
 						bgcolor: "background.paper",

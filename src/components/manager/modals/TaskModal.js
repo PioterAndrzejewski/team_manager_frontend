@@ -17,6 +17,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { useModal } from "../../../context/modalContext";
 import { useError } from "../../../context/errorContext";
 import { useTeam } from "../../../context/teamContext";
+import moment from "moment/moment";
 
 const style = {
 	position: "absolute",
@@ -31,22 +32,15 @@ const style = {
 };
 
 export default function TaskModal() {
-	const { projectId, updateTasks, updateTeamMembers } = useTeam();
-	const {
-		taskModalOpen,
-		setTaskModalOpen,
-		modalMode,
-		taskToEdit,
-		teamMemberToEdit,
-	} = useModal();
+	const { projectId, updateTasks } = useTeam();
+	const { taskModalOpen, setTaskModalOpen, modalMode } = useModal();
 	const { error, setError } = useError();
 
 	const [nameInputValue, setNameInputValue] = useState("");
 	const [descriptionInputValue, setDescriptionInputValue] = useState("");
 
-	const [dateValue, setDateValue] = useState(
-		"Thu Jan 26 2023 19:00:29 GMT+0100"
-	);
+	const [dateValue, setDateValue] = useState(moment());
+	const [finishedDateValue, setFinishedDateValue] = useState(moment());
 
 	const handleClose = () => {
 		setError({ is: false, message: "" });
@@ -76,9 +70,6 @@ export default function TaskModal() {
 			formData.append("taskDueDate", dateValue);
 			formData.append("taskName", nameInputValue);
 			formData.append("taskDescription", descriptionInputValue);
-			if (modalMode === "edit") {
-				formData.append("taskToEditId", taskToEdit.id);
-			}
 
 			const response = await axios({
 				method: "post",
@@ -121,7 +112,7 @@ export default function TaskModal() {
 								fullWidth
 								id="taskName"
 								label={modalMode === "create" ? "New task name" : `Edit task: `}
-								name="memberName"
+								name="taskName"
 								value={nameInputValue}
 								onChange={handleNameChange}
 								helperText="Please enter task name at least 4 characters"
@@ -136,10 +127,14 @@ export default function TaskModal() {
 								onChange={handleDescriptionChange}
 								helperText="Please enter description or leave it blank"
 							/>
-							<LocalizationProvider dateAdapter={AdapterMoment}>
+							<LocalizationProvider
+								dateAdapter={AdapterMoment}
+								adapterLocale="pl-PL"
+							>
 								<MobileDatePicker
 									label="Task due date"
 									inputFormat="MM/DD/YYYY"
+									showToolbar
 									value={dateValue}
 									onChange={handleDateChange}
 									renderInput={(params) => <TextField {...params} />}
