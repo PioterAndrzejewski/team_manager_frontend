@@ -35,7 +35,10 @@ export default function TeamMemberModal() {
 	const [fileToUpload, setFileToUpload] = useState([]);
 	const [inputValue, setInputValue] = useState("");
 
-	const handleClose = () => setTeamModalOpen(false);
+	const handleClose = () => {
+		setError({ is: false, message: "" });
+		setTeamModalOpen(false);
+	};
 
 	const handleChange = (e) => {
 		setInputValue(e.target.value);

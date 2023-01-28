@@ -48,7 +48,10 @@ export default function TaskModal() {
 		"Thu Jan 26 2023 19:00:29 GMT+0100"
 	);
 
-	const handleClose = () => setTaskModalOpen(false);
+	const handleClose = () => {
+		setError({ is: false, message: "" });
+		setTaskModalOpen(false);
+	};
 
 	const handleNameChange = (e) => {
 		setNameInputValue(e.target.value);
@@ -68,6 +71,7 @@ export default function TaskModal() {
 		}
 		const handleFetch = async () => {
 			let formData = new FormData();
+			formData.append("projectId", projectId);
 			formData.append("mode", modalMode);
 			formData.append("taskDueDate", dateValue);
 			formData.append("taskName", nameInputValue);
@@ -83,9 +87,9 @@ export default function TaskModal() {
 				headers: { "Content-Type": "multipart/form-data" },
 			});
 
-			// updateTeamMembers(response.data.projectMembers);
 			if (response.data.success) {
 				setError({ is: false, message: "" });
+				updateTasks(response.data.updatedTaskList);
 				handleClose();
 			}
 		};
