@@ -1,4 +1,7 @@
 import * as React from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Grid";
@@ -24,7 +27,36 @@ function TaskCard(props) {
 		taskAssignees,
 	} = props.taskData;
 
-	const { teamMembers } = useTeam();
+	const [removeId, setRemoveId] = useState(undefined);
+
+	const { teamMembers, projectId, updateTasks } = useTeam();
+
+	useEffect(() => {
+		const handleFetch = async () => {
+			const response = await axios.post("http://127.0.0.1:3636/task", {
+				projectId,
+				taskToRemoveId: taskId,
+				mode: "remove",
+			});
+			updateTasks(response.data.updatedTaskList);
+		};
+
+		if (removeId != undefined) {
+			handleFetch();
+			setRemoveId(undefined);
+		}
+	}, [removeId]);
+
+	const handleRemoveButton = (e) => {
+		e.preventDefault();
+		const confirm = prompt(
+			`You are going to remove task: "${taskName}". Are you sure? This action is irreversibikible.
+			Please write "remove" to confirm`
+		);
+		if (confirm === "remove") {
+			setRemoveId(taskId);
+		}
+	};
 
 	return (
 		<Grid item xs={12} md={6} sx={{ flexGrow: 1, m: 1 }}>
@@ -38,7 +70,7 @@ function TaskCard(props) {
 						justifyContent: "space-between",
 					}}
 				>
-					<Typography component="h2" variant="h5">
+					<Typography compon`ent="h2" variant="h5">
 						{taskName}
 					</Typography>
 					<Typography variant="subtitle1">{`${taskDescription}`}</Typography>
@@ -55,7 +87,7 @@ function TaskCard(props) {
 					</Box>
 					<Box>
 						<Button size="small">Edit</Button>
-						<Button size="small" color="error">
+						<Button size="small" color="error" onClick={handleRemoveButton}>
 							Remove task
 						</Button>
 						<Button size="small">
