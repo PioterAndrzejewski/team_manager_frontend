@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import axios from "axios";
 
 import SectionBar from "./SectionBar";
+import Home from "./Home";
 import TeamManager from "./TeamManager";
 import TasksManager from "./TasksManager";
 import TeamSettings from "./TeamSettings";
@@ -46,6 +47,7 @@ function ProjectManager() {
 		<>
 			<SectionBar />
 			<Routes>
+				<Route path="home" element={<Home />} />
 				<Route path="team" element={<TeamManager />} />
 				<Route path="tasks" element={<TasksManager />} />
 				<Route path="settings" element={<TeamSettings />} />

@@ -11,8 +11,9 @@ import { useTeam } from "../../context/teamContext";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import moment from "moment";
 
-function TeamManager() {
+function TasksManager() {
 	const { teamTasks } = useTeam();
 
 	console.log("renderuje team manager");
@@ -44,6 +45,13 @@ function TeamManager() {
 								.filter((task) => !task.taskFinished)
 								.map((task) => {
 									return <TaskCard taskId={task.taskId} key={task.taskId} />;
+								})
+								.sort((a, b) => {
+									if (moment(a.taskDueDate) > moment(b.taskDueDate)) {
+										return 1;
+									} else {
+										return -1;
+									}
 								})}
 					</Container>
 				</Box>
@@ -76,4 +84,4 @@ function TeamManager() {
 	);
 }
 
-export default TeamManager;
+export default TasksManager;
