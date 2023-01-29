@@ -89,6 +89,7 @@ function TaskAssignees({ taskId }) {
 									transition: "0.1s",
 									"&:hover": {
 										transform: "scale(105%)",
+										backgroundColor: "#eedddd",
 									},
 								}}
 								onClick={() => {
@@ -125,6 +126,7 @@ function TaskAssignees({ taskId }) {
 					transition: "0.1s",
 					"&:hover": {
 						transform: "scale(105%)",
+						backgroundColor: "#e6f2ff",
 					},
 				}}
 			>

@@ -86,11 +86,43 @@ function TeamMemberCard({ teamMember }) {
 				</CardContent>
 
 				<CardActions>
-					<Button size="small">View tasks</Button>
-					<Button size="small" onClick={handleEditButton}>
+					<Button
+						size="small"
+						sx={{
+							transition: "0.1s",
+							"&:hover": {
+								transform: "scale(105%)",
+								backgroundColor: "#e6f2ff",
+							},
+						}}
+					>
+						View tasks
+					</Button>
+					<Button
+						size="small"
+						onClick={handleEditButton}
+						sx={{
+							transition: "0.1s",
+							"&:hover": {
+								transform: "scale(105%)",
+								backgroundColor: "#e6f2ff",
+							},
+						}}
+					>
 						Edit
 					</Button>
-					<Button size="small" color="error" onClick={handleRemoveButton}>
+					<Button
+						size="small"
+						color="error"
+						onClick={handleRemoveButton}
+						sx={{
+							transition: "0.1s",
+							"&:hover": {
+								transform: "scale(105%)",
+								backgroundColor: "#FFF4F4",
+							},
+						}}
+					>
 						Remove
 					</Button>
 				</CardActions>

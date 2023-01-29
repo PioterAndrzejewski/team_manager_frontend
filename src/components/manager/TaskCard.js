@@ -23,12 +23,10 @@ import { useModal } from "../../context/modalContext";
 function TaskCard({ taskId }) {
 	const [editId, setEditId] = useState(undefined);
 	const [mode, setMode] = useState(undefined);
+	const [taskOverDue, setTaskOverDue] = useState(false);
 
 	const { projectId, updateTasks, teamTasks, updateTeamMembers } = useTeam();
 	const { setEditTaskModalOpen, setModalMode } = useModal();
-
-	console.log("renderuje ponownie taskcard");
-	console.log(teamTasks);
 
 	const taskToRender = teamTasks.find((task) => task.taskId === taskId);
 	console.log({ taskToRender });
@@ -40,6 +38,10 @@ function TaskCard({ taskId }) {
 		taskFinished,
 		taskFinishedDate,
 	} = taskToRender;
+
+	useEffect(() => {
+		setTaskOverDue(moment() > moment(taskDueDate) && !taskFinished);
+	}, []);
 
 	useEffect(() => {
 		const handleFetch = async () => {
@@ -105,7 +107,12 @@ function TaskCard({ taskId }) {
 
 	return (
 		<Grid item xs={12} md={6} sx={{ flexGrow: 1, m: 1 }}>
-			<Card sx={{ display: "flex" }}>
+			<Card
+				sx={{
+					display: "flex",
+					backgroundColor: taskOverDue && "#FFB09F",
+				}}
+			>
 				<CardContent
 					sx={{
 						flex: 1,
@@ -129,15 +136,22 @@ function TaskCard({ taskId }) {
 								? `${moment(taskFinishedDate).format("DD-MM-YYYY")}`
 								: "Task is not finished yet"}
 						</Typography>
+						{taskOverDue && (
+							<Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+								This task is overdue
+							</Typography>
+						)}
 					</Box>
-					<Box>
+					<Box sx={{ mt: "10px" }}>
 						<Button
 							size="small"
 							sx={{
 								transition: "0.1s",
+								backgroundColor: "white",
+								boxShadow: "grey 1px 1px 3px",
 								"&:hover": {
 									transform: "scale(105%)",
-									backgroundColor: "#F4FFFF",
+									backgroundColor: "#e6f2ff",
 								},
 							}}
 							onClick={handleEditButton}
@@ -149,7 +163,10 @@ function TaskCard({ taskId }) {
 							color="error"
 							onClick={handleRemoveButton}
 							sx={{
+								mx: "5px",
 								transition: "0.1s",
+								backgroundColor: "white",
+								boxShadow: "grey 1px 1px 3px",
 								"&:hover": {
 									transform: "scale(105%)",
 									backgroundColor: "#FFF4F4",
@@ -163,9 +180,11 @@ function TaskCard({ taskId }) {
 							onClick={handleSetFinishButton}
 							sx={{
 								transition: "0.1s",
+								backgroundColor: "white",
+								boxShadow: "grey 1px 1px 3px",
 								"&:hover": {
 									transform: "scale(105%)",
-									backgroundColor: "#F4FFFF",
+									backgroundColor: "#e6f2ff",
 								},
 							}}
 						>

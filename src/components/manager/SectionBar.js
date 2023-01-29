@@ -52,8 +52,10 @@ function SectionBar() {
 							transition: "0.15s",
 							borderRadius: "5px",
 							fontWeight: "600",
+							backgroundColor: "white",
+							boxShadow: "grey 1px 1px 3px",
 							"&:hover": {
-								transform: "scale(110%)",
+								transform: "scale(105%)",
 								backgroundColor: "#f0fafc",
 							},
 						}}
