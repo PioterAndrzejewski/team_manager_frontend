@@ -13,7 +13,7 @@ import { useTeam } from "../../context/teamContext";
 import { useModal } from "../../context/modalContext";
 
 function TeamMemberCard({ teamMember }) {
-	const { projectId, updateTeamMembers, teamMembers } = useTeam();
+	const { projectId, updateTeamMembers, teamMembers, updateTasks } = useTeam();
 	const [removeId, setRemoveId] = useState(undefined);
 	const { teamModalOpen, setTeamModalOpen, setModalMode, setTeamMemberToEdit } =
 		useModal();
@@ -25,6 +25,8 @@ function TeamMemberCard({ teamMember }) {
 				removeMemberId: teamMember.memberId,
 			});
 			updateTeamMembers(response.data.projectMembers);
+			updateTasks(response.data.projectTasks);
+			setRemoveId(undefined);
 		};
 		if (removeId != undefined) {
 			handleFetch();

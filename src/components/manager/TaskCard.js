@@ -44,7 +44,10 @@ function TaskCard({ taskId }) {
 				mode,
 				finishedDate: moment(),
 			});
-			updateTasks(response.data.updatedTaskList);
+			if (response.data.success) {
+				updateTasks(response.data.updatedTaskList);
+				setEditId(undefined);
+			}
 		};
 
 		if (editId != undefined) {
