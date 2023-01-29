@@ -20,7 +20,6 @@ function TeamManager() {
 				<TeamMemberModal />
 				<Box
 					sx={{
-						bgcolor: "background.paper",
 						pt: 0.5,
 						pb: 0.5,
 					}}

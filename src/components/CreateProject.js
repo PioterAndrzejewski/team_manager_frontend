@@ -63,7 +63,18 @@ export default function SignUp() {
 
 	return (
 		<main>
-			<Container component="main" maxWidth="xs">
+			<Container
+				component="main"
+				maxWidth="xs"
+				sx={{
+					marginTop: "50px",
+					paddingTop: "2px",
+					paddingBottom: "20px",
+					borderRadius: "10px",
+					backgroundColor: "white",
+					boxShadow: "#A5A5A5 2px 2px 5px",
+				}}
+			>
 				<CssBaseline />
 				<Box
 					sx={{
@@ -117,7 +128,7 @@ export default function SignUp() {
 							type="submit"
 							fullWidth
 							variant="contained"
-							sx={{ mt: 3, mb: 2 }}
+							sx={{ mt: 3, mb: 5 }}
 						>
 							Create a project!
 						</Button>

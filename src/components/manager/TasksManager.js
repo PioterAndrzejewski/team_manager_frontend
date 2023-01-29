@@ -15,6 +15,8 @@ import Container from "@mui/material/Container";
 function TeamManager() {
 	const { teamTasks } = useTeam();
 
+	console.log("renderuje team manager");
+
 	return (
 		<>
 			<main>
@@ -22,7 +24,6 @@ function TeamManager() {
 				<EditTaskModal />
 				<Box
 					sx={{
-						bgcolor: "background.paper",
 						pt: 8,
 						pb: 6,
 					}}
@@ -48,7 +49,6 @@ function TeamManager() {
 				</Box>
 				<Box
 					sx={{
-						bgcolor: "background.paper",
 						pt: 8,
 						pb: 6,
 					}}

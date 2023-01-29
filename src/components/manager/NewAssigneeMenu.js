@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
+import CardMedia from "@mui/material/CardMedia";
 
 import { useAssignee } from "../../context/assigneeContext";
 import { useTeam } from "../../context/teamContext";
@@ -26,7 +27,7 @@ export default function NewAssigneeMenu({ taskId }) {
 			const response = await axios.post("http://127.0.0.1:3636/task", {
 				mode: "addassignee",
 				projectId,
-				taskId,
+				taskToEditId: taskId,
 				memberId: assigneeToAdd,
 			});
 			await updateTasks(response.data.projectTasks);
@@ -53,8 +54,11 @@ export default function NewAssigneeMenu({ taskId }) {
 				<Typography sx={{ padding: "5px" }}>Add Assignee: </Typography>
 				{teamMembers
 					.filter((member) => {
+						const taskToRender = teamTasks.find(
+							(task) => task.taskId === taskId
+						);
 						let memberIsNotAssignee = true;
-						teamTasks[taskId].taskAssignees.forEach((assigneeId) => {
+						taskToRender.taskAssignees.forEach((assigneeId) => {
 							if (assigneeId === member.memberId) {
 								memberIsNotAssignee = false;
 							}
@@ -69,6 +73,18 @@ export default function NewAssigneeMenu({ taskId }) {
 								}}
 								key={teamMember.memberId}
 							>
+								<CardMedia
+									component="img"
+									sx={{
+										// 16:9
+										mr: "15px",
+										borderRadius: "50%",
+										height: "40px",
+										width: "40px",
+									}}
+									image={teamMember.memberImageURL}
+									alt="random"
+								/>
 								{teamMember.memberName}
 							</MenuItem>
 						);

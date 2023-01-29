@@ -20,32 +20,67 @@ import { useError } from "../../context/errorContext";
 
 function TeamSettings() {
 	const [deleteProject, setDeleteProject] = useState(false);
-	const { projectName, projectId } = useTeam();
+	const [editProject, setEditProject] = useState("");
+	const { projectName, projectId, changeProjectName } = useTeam();
+	const [projectNameInput, setProjectNameInput] = useState("");
+
 	const navigate = useNavigate();
 	const { setError } = useError();
 
-	useEffect(() => {
-		const handleFetch = async () => {
-			const response = await axios.post("http://127.0.0.1:3636/removeproject", {
-				projectId: projectId,
-			});
-			if (response.success) {
-				navigate("/");
-				localStorage.removeItem("lastProjectName");
-				localStorage.removeItem("lastProjectId");
-				localStorage.removeItem("useProjectId");
-				setError({
-					is: true,
-					message: "Project has been removed",
-				});
-			}
-		};
-		if (deleteProject) {
-			handleFetch();
+	const handleFetch = async (mode) => {
+		const response = await axios.post("http://127.0.0.1:3636/editproject", {
+			projectId: projectId,
+			mode,
+			newProjectName: projectNameInput,
+		});
+		return response;
+	};
 
+	const handleInputChange = (e) => {
+		setProjectNameInput(e.target.value);
+	};
+
+	const handleRenameButton = (e) => {
+		e.preventDefault();
+		setEditProject(true);
+	};
+
+	useEffect(() => {
+		if (deleteProject) {
+			handleFetch("remove");
 			setDeleteProject(false);
+			localStorage.removeItem("lastProjectName");
+			localStorage.removeItem("lastProjectId");
+			localStorage.removeItem("useProjectId");
+			setError({
+				is: true,
+				message: "Project has been removed",
+			});
+			navigate("/");
+
+			return;
 		}
 	}, [deleteProject]);
+
+	useEffect(() => {
+		if (editProject && projectNameInput.length < 4) {
+			setError({
+				is: true,
+				message: "Project name must be at least 4 letters.",
+			});
+			setEditProject(false);
+		}
+		if (editProject) {
+			const response = handleFetch("edit");
+			setEditProject(false);
+			localStorage.setItem("lastProjectName", projectNameInput);
+			setError({
+				is: false,
+				message: "",
+			});
+			changeProjectName(projectNameInput);
+		}
+	}, [editProject]);
 
 	const handleDeleteButton = () => {
 		const confirm =
@@ -62,10 +97,14 @@ function TeamSettings() {
 			<Container component="main" maxWidth="xs">
 				<Box
 					sx={{
+						padding: "60px",
+						borderRadius: "15px",
 						marginTop: 8,
 						display: "flex",
 						flexDirection: "column",
 						alignItems: "center",
+						backgroundColor: "white",
+						boxShadow: "#A5A5A5 2px 2px 5px",
 					}}
 				>
 					<Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -84,6 +123,8 @@ function TeamSettings() {
 									fullWidth
 									id="projectName"
 									label="New project name"
+									value={projectNameInput}
+									onChange={handleInputChange}
 									autoFocus
 								/>
 							</Grid>
@@ -93,6 +134,7 @@ function TeamSettings() {
 							fullWidth
 							variant="contained"
 							sx={{ mt: 3, mb: 2 }}
+							onClick={handleRenameButton}
 						>
 							Rename project
 						</Button>

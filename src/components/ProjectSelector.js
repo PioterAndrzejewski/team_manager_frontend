@@ -61,9 +61,13 @@ export default function ProjectSelector() {
 				<Box
 					sx={{
 						marginTop: 8,
+						p: "25px",
 						display: "flex",
 						flexDirection: "column",
 						alignItems: "center",
+						borderRadius: "10px",
+						backgroundColor: "white",
+						boxShadow: "#A5A5A5 2px 2px 5px",
 					}}
 				>
 					<Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>

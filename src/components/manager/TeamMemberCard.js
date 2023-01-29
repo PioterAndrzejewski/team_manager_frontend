@@ -7,6 +7,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 import { useTeam } from "../../context/teamContext";
@@ -62,6 +63,7 @@ function TeamMemberCard({ teamMember }) {
 					height: "100%",
 					display: "flex",
 					flexDirection: "column",
+					justifyContent: "space-between",
 				}}
 			>
 				<CardMedia
@@ -69,11 +71,12 @@ function TeamMemberCard({ teamMember }) {
 					sx={{
 						// 16:9
 						pt: "0",
+						flexGrow: "1",
 					}}
 					image={teamMember.memberImageURL}
 					alt="random"
 				/>
-				<CardContent sx={{ flexGrow: 1 }}>
+				<CardContent sx={{ justifySelf: "end" }}>
 					<Typography gutterBottom variant="h5" component="h2">
 						{teamMember.memberName}
 					</Typography>
@@ -81,6 +84,7 @@ function TeamMemberCard({ teamMember }) {
 						Assigned tasks: {teamMember.memberTasks.length}
 					</Typography>
 				</CardContent>
+
 				<CardActions>
 					<Button size="small">View tasks</Button>
 					<Button size="small" onClick={handleEditButton}>

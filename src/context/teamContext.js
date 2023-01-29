@@ -11,6 +11,10 @@ export const TeamProvider = ({ children }) => {
 
 	const [projectId, setProjectId] = useState();
 
+	const changeProjectName = (newProjectName) => {
+		setProjectName(newProjectName);
+	};
+
 	const updateTeam = (fetchedData) => {
 		localStorage.setItem("lastProjectId", fetchedData.projectId);
 		localStorage.setItem("lastProjectName", fetchedData.projectName);
@@ -38,6 +42,7 @@ export const TeamProvider = ({ children }) => {
 				projectId,
 				updateTeamMembers,
 				projectName,
+				changeProjectName,
 			}}
 		>
 			{children}

@@ -8,6 +8,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
+import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CheckCircleOutlineSharpIcon from "@mui/icons-material/CheckCircleOutlineSharp";
 import PersonRemove from "@mui/icons-material/PersonRemove";
@@ -27,7 +28,8 @@ function TaskAssignees({ taskId }) {
 	const { anchorEl, setAnchorEl, setAnchorElId, anchorElId } = useAssignee();
 	const [removeAssigneeId, setRemoveAssigneeId] = useState(undefined);
 
-	const { taskAssignees } = teamTasks[taskId];
+	const taskToRender = teamTasks.find((task) => task.taskId === taskId);
+	const { taskAssignees } = taskToRender;
 
 	useEffect(() => {
 		const handleFetch = async () => {
@@ -64,7 +66,7 @@ function TaskAssignees({ taskId }) {
 		>
 			<Box>
 				<Typography component="span" variant="body2" color="text.secondary">
-					Assignees
+					Assignees:
 				</Typography>
 				<Box
 					sx={{
@@ -74,19 +76,40 @@ function TaskAssignees({ taskId }) {
 					}}
 				>
 					{taskAssignees.map((assigneeId) => {
+						const teamMemberToRender = teamMembers.find(
+							(member) => member.memberId === assigneeId
+						);
 						return (
 							<Button
+								color="error"
 								key={assigneeId}
 								sx={{
 									color: "black",
 									justifyContent: "flex-start",
+									transition: "0.1s",
+									"&:hover": {
+										transform: "scale(105%)",
+									},
 								}}
 								onClick={() => {
 									setRemoveAssigneeId(assigneeId);
 								}}
 							>
-								<PersonRemove sx={{ mr: "15px" }} />
-								{teamMembers[assigneeId].memberName}
+								<CardMedia
+									component="img"
+									sx={{
+										// 16:9
+										mr: "15px",
+										borderRadius: "50%",
+										height: "40px",
+										width: "40px",
+									}}
+									image={teamMemberToRender.memberImageURL}
+									alt="random"
+								/>
+
+								{teamMemberToRender.memberName}
+								<PersonRemove sx={{ ml: "15px" }} />
 							</Button>
 						);
 					})}
@@ -98,9 +121,10 @@ function TaskAssignees({ taskId }) {
 				size="medium"
 				onClick={handleAddAssigneeClick}
 				sx={{
+					m: "5px",
 					transition: "0.1s",
 					"&:hover": {
-						transform: "scale(115%)",
+						transform: "scale(105%)",
 					},
 				}}
 			>

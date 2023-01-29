@@ -19,7 +19,7 @@ function Header(props) {
 				}}
 			>
 				<Toolbar>
-					<GitHubIcon sx={{ m: "5px" }} color="primary" />
+					<GitHubIcon sx={{ mr: "25px" }} color="primary" />
 					<Button size="medium">
 						<Link
 							noWrap

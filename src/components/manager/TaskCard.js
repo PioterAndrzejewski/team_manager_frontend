@@ -24,9 +24,14 @@ function TaskCard({ taskId }) {
 	const [editId, setEditId] = useState(undefined);
 	const [mode, setMode] = useState(undefined);
 
-	const { projectId, updateTasks, teamTasks } = useTeam();
+	const { projectId, updateTasks, teamTasks, updateTeamMembers } = useTeam();
 	const { setEditTaskModalOpen, setModalMode } = useModal();
 
+	console.log("renderuje ponownie taskcard");
+	console.log(teamTasks);
+
+	const taskToRender = teamTasks.find((task) => task.taskId === taskId);
+	console.log({ taskToRender });
 	const {
 		taskName,
 		taskDescription,
@@ -34,7 +39,7 @@ function TaskCard({ taskId }) {
 		taskDueDate,
 		taskFinished,
 		taskFinishedDate,
-	} = teamTasks[taskId];
+	} = taskToRender;
 
 	useEffect(() => {
 		const handleFetch = async () => {
@@ -44,9 +49,26 @@ function TaskCard({ taskId }) {
 				mode,
 				finishedDate: moment(),
 			});
-			if (response.data.success) {
+			if (!response.data.success) {
+				return;
+			}
+
+			if (
+				mode === "setfinished" ||
+				mode === "setunfinished" ||
+				mode == "edit"
+			) {
 				updateTasks(response.data.updatedTaskList);
-				setEditId(undefined);
+				return;
+			}
+
+			if (
+				mode === "addassignee" ||
+				mode === "removeassignee" ||
+				mode === "remove"
+			) {
+				updateTasks(response.data.updatedTaskList);
+				updateTeamMembers(response.data.projectMembers);
 			}
 		};
 
@@ -63,7 +85,7 @@ function TaskCard({ taskId }) {
 
 	const handleRemoveButton = (e) => {
 		const confirm = prompt(
-			`You are going to remove task: "${teamTasks[taskId].taskName}". Are you sure? This action is irreversibikible.
+			`You are going to remove task: "${taskName}". Are you sure? This action is irreversibikible.
 			Please write "remove" to confirm`
 		);
 		if (confirm === "remove") {
@@ -74,7 +96,7 @@ function TaskCard({ taskId }) {
 
 	const handleSetFinishButton = (e) => {
 		setEditId(taskId);
-		if (teamTasks[taskId].taskFinished) {
+		if (taskFinished) {
 			setMode("setunfinished");
 			return;
 		}
@@ -98,16 +120,13 @@ function TaskCard({ taskId }) {
 					</Typography>
 					<Typography variant="subtitle1">{`${taskDescription}`}</Typography>
 					<Typography variant="caption" color="text.secondary">
-						Due date:{" "}
-						{`${moment(teamTasks[taskId].taskDueDate).format("DD-MM-YYYY")}`}
+						Due date: {`${moment(taskDueDate).format("DD-MM-YYYY")}`}
 					</Typography>
 					<Box>
 						<Typography variant="caption" color="text.secondary">
 							Finished date:{" "}
-							{teamTasks[taskId].taskFinished
-								? `${moment(teamTasks[taskId].taskFinishedDate).format(
-										"DD-MM-YYYY"
-								  )}`
+							{taskFinished
+								? `${moment(taskFinishedDate).format("DD-MM-YYYY")}`
 								: "Task is not finished yet"}
 						</Typography>
 					</Box>
@@ -115,10 +134,10 @@ function TaskCard({ taskId }) {
 						<Button
 							size="small"
 							sx={{
-								transition: "0.2s",
+								transition: "0.1s",
 								"&:hover": {
-									transform: "scale(110%)",
-									backgroundColor: "#DDEDF0",
+									transform: "scale(105%)",
+									backgroundColor: "#F4FFFF",
 								},
 							}}
 							onClick={handleEditButton}
@@ -130,10 +149,10 @@ function TaskCard({ taskId }) {
 							color="error"
 							onClick={handleRemoveButton}
 							sx={{
-								transition: "0.02s",
+								transition: "0.1s",
 								"&:hover": {
-									transform: "scale(110%)",
-									backgroundColor: "#DDEDF0",
+									transform: "scale(105%)",
+									backgroundColor: "#FFF4F4",
 								},
 							}}
 						>
@@ -143,16 +162,14 @@ function TaskCard({ taskId }) {
 							size="small"
 							onClick={handleSetFinishButton}
 							sx={{
-								transition: "0.02s",
+								transition: "0.1s",
 								"&:hover": {
-									transform: "scale(110%)",
-									backgroundColor: "#DDEDF0",
+									transform: "scale(105%)",
+									backgroundColor: "#F4FFFF",
 								},
 							}}
 						>
-							{teamTasks[taskId].taskFinished
-								? "Mark as unfinished"
-								: "Mark as finished"}
+							{taskFinished ? "Mark as unfinished" : "Mark as finished"}
 						</Button>
 					</Box>
 				</CardContent>
