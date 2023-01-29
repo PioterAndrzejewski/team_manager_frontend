@@ -12,12 +12,13 @@ import { useTeam } from "../../context/teamContext";
 export default function NewAssigneeMenu({ taskId }) {
 	const { teamMembers, teamTasks, updateTeamMembers, updateTasks, projectId } =
 		useTeam();
-	const { anchorEl, setAnchorEl } = useAssignee();
+	const { anchorEl, setAnchorEl, anchorElId, setAnchorElId } = useAssignee();
 
 	const [assigneeToAdd, setAssigneeToAdd] = useState(undefined);
 	const open = Boolean(anchorEl);
 	const handleClose = () => {
-		setAnchorEl(null);
+		setAnchorEl(undefined);
+		setAnchorElId(undefined);
 	};
 
 	useEffect(() => {
@@ -28,12 +29,13 @@ export default function NewAssigneeMenu({ taskId }) {
 				taskId,
 				memberId: assigneeToAdd,
 			});
-			updateTeamMembers(response.data.projectMembers);
-			updateTasks(response.data.projectTasks);
+			await updateTasks(response.data.projectTasks);
+			await updateTeamMembers(response.data.projectMembers);
 		};
 
 		if (assigneeToAdd !== undefined) {
 			handleFetch();
+			setAssigneeToAdd(undefined);
 		}
 	}, [assigneeToAdd]);
 	return (

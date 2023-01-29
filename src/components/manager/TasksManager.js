@@ -38,11 +38,12 @@ function TeamManager() {
 					</Typography>
 					<Container sx={{ py: 8 }} maxWidth="md">
 						<NewTaskCard />
-						{teamTasks
-							.filter((task) => !task.taskFinished)
-							.map((task) => {
-								return <TaskCard taskId={task.taskId} key={task.taskId} />;
-							})}
+						{teamTasks &&
+							teamTasks
+								.filter((task) => !task.taskFinished)
+								.map((task) => {
+									return <TaskCard taskId={task.taskId} key={task.taskId} />;
+								})}
 					</Container>
 				</Box>
 				<Box
@@ -62,11 +63,12 @@ function TeamManager() {
 						Finished Tasks:
 					</Typography>
 					<Container sx={{ py: 8 }} maxWidth="md">
-						{teamTasks
-							.filter((task) => task.taskFinished)
-							.map((task) => {
-								return <TaskCard taskId={task.taskId} key={task.taskId} />;
-							})}
+						{teamTasks &&
+							teamTasks
+								.filter((task) => task.taskFinished)
+								.map((task) => {
+									return <TaskCard taskId={task.taskId} key={task.taskId} />;
+								})}
 					</Container>
 				</Box>
 			</main>

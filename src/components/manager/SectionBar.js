@@ -1,6 +1,7 @@
 import * as React from "react";
 import Toolbar from "@mui/material/Toolbar";
 import Link from "@mui/material/Link";
+import Typography from "@mui/material/Typography";
 
 import { Link as RouterLink } from "react-router-dom";
 import { useTeam } from "../../context/teamContext";
@@ -14,9 +15,18 @@ const sections = [
 ];
 
 function SectionBar() {
-	const { projectId } = useTeam();
+	const { projectId, projectName } = useTeam();
 	return (
 		<nav>
+			<Typography
+				component="h1"
+				variant="h3"
+				align="center"
+				color="text.primary"
+				gutterBottom
+			>
+				{projectName}
+			</Typography>
 			<Toolbar
 				component="nav"
 				variant="dense"

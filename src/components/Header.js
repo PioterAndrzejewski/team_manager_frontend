@@ -11,7 +11,13 @@ function Header(props) {
 
 	return (
 		<React.Fragment>
-			<Toolbar sx={{ borderBottom: 1, borderColor: "divider" }}>
+			<Toolbar
+				sx={{
+					borderBottom: 1,
+					borderColor: "divider",
+					justifyContent: "space-between",
+				}}
+			>
 				<Toolbar>
 					<GitHubIcon sx={{ m: "5px" }} color="primary" />
 					<Button size="medium">
@@ -42,16 +48,6 @@ function Header(props) {
 					</Button>
 				</Toolbar>
 
-				<Typography
-					component="h2"
-					variant="h5"
-					color="inherit"
-					align="center"
-					noWrap
-					sx={{ flex: 1 }}
-				>
-					{title}
-				</Typography>
 				<Button variant="outlined" size="small" component={RouterLink} to="/">
 					Welcome page
 				</Button>

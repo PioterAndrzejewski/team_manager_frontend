@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import axios from "axios";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -10,10 +14,49 @@ import Box from "@mui/material/Box";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { Link as RouterLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+
+import { useTeam } from "../../context/teamContext";
+import { useError } from "../../context/errorContext";
 
 function TeamSettings() {
+	const [deleteProject, setDeleteProject] = useState(false);
+	const { projectName, projectId } = useTeam();
+	const navigate = useNavigate();
+	const { setError } = useError();
+
+	useEffect(() => {
+		const handleFetch = async () => {
+			const response = await axios.post("http://127.0.0.1:3636/removeproject", {
+				projectId: projectId,
+			});
+			if (response.success) {
+				navigate("/");
+				localStorage.removeItem("lastProjectName");
+				localStorage.removeItem("lastProjectId");
+				localStorage.removeItem("useProjectId");
+				setError({
+					is: true,
+					message: "Project has been removed",
+				});
+			}
+		};
+		if (deleteProject) {
+			handleFetch();
+
+			setDeleteProject(false);
+		}
+	}, [deleteProject]);
+
+	const handleDeleteButton = () => {
+		const confirm =
+			prompt(`You are going to delete the project. This action is irreversible.
+		Write "remove" to confirm
+		`);
+
+		if (confirm === "remove") {
+			setDeleteProject(true);
+		}
+	};
 	return (
 		<main>
 			<Container component="main" maxWidth="xs">
@@ -59,6 +102,7 @@ function TeamSettings() {
 							variant="contained"
 							color="error"
 							sx={{ mt: 3, mb: 2 }}
+							onClick={handleDeleteButton}
 						>
 							Delete project
 						</Button>

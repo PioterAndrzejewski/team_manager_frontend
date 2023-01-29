@@ -7,12 +7,14 @@ export const TeamProvider = ({ children }) => {
 
 	const [teamTasks, setTeamTasks] = useState([]);
 
+	const [projectName, setProjectName] = useState();
+
 	const [projectId, setProjectId] = useState();
 
 	const updateTeam = (fetchedData) => {
 		localStorage.setItem("lastProjectId", fetchedData.projectId);
 		localStorage.setItem("lastProjectName", fetchedData.projectName);
-
+		setProjectName(fetchedData.projectName);
 		setTeamMembers(fetchedData.projectMembers);
 		setTeamTasks(fetchedData.taskList);
 		setProjectId(fetchedData.projectId);
@@ -35,6 +37,7 @@ export const TeamProvider = ({ children }) => {
 				updateTeam,
 				projectId,
 				updateTeamMembers,
+				projectName,
 			}}
 		>
 			{children}

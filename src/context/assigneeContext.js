@@ -5,12 +5,15 @@ const AssigneeContext = createContext(undefined);
 
 export const AssigneeProvider = ({ children }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
+	const [anchorElId, setAnchorElId] = useState(undefined);
 
 	return (
 		<AssigneeContext.Provider
 			value={{
 				anchorEl,
 				setAnchorEl,
+				anchorElId,
+				setAnchorElId,
 			}}
 		>
 			{children}

@@ -11,6 +11,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CheckCircleOutlineSharpIcon from "@mui/icons-material/CheckCircleOutlineSharp";
 import PersonRemove from "@mui/icons-material/PersonRemove";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 import TeamMemberCardSmall from "./TeamMemberCardSmall";
 import TeamMemberNewCardSmall from "./TeamMemberNewCardSmall";
@@ -23,8 +24,7 @@ import { useModal } from "../../context/modalContext";
 function TaskAssignees({ taskId }) {
 	const { projectId, updateTasks, teamMembers, teamTasks, updateTeamMembers } =
 		useTeam();
-	const { anchorEl, setAnchorEl } = useAssignee();
-
+	const { anchorEl, setAnchorEl, setAnchorElId, anchorElId } = useAssignee();
 	const [removeAssigneeId, setRemoveAssigneeId] = useState(undefined);
 
 	const { taskAssignees } = teamTasks[taskId];
@@ -32,10 +32,10 @@ function TaskAssignees({ taskId }) {
 	useEffect(() => {
 		const handleFetch = async () => {
 			const response = await axios.post("http://127.0.0.1:3636/task", {
+				mode: "removeassignee",
 				projectId,
 				taskToEditId: taskId,
 				assigneeToRemove: removeAssigneeId,
-				mode: "removeassignee",
 			});
 			updateTasks(response.data.projectTasks);
 			updateTeamMembers(response.data.projectMembers);
@@ -47,7 +47,10 @@ function TaskAssignees({ taskId }) {
 		}
 	}, [removeAssigneeId]);
 
-	const handleAddAssigneeClick = () => {};
+	const handleAddAssigneeClick = (e) => {
+		setAnchorEl(e.target);
+		setAnchorElId(taskId);
+	};
 
 	return (
 		<CardContent
@@ -89,7 +92,8 @@ function TaskAssignees({ taskId }) {
 					})}
 				</Box>
 			</Box>
-			<NewAssigneeMenu taskId={taskId} />
+			{anchorElId === taskId && <NewAssigneeMenu taskId={taskId} />}
+
 			<Button
 				size="medium"
 				onClick={handleAddAssigneeClick}
@@ -100,7 +104,7 @@ function TaskAssignees({ taskId }) {
 					},
 				}}
 			>
-				<CheckCircleOutlineSharpIcon sx={{ m: "5px" }} />
+				<PersonAddIcon sx={{ m: "5px" }} />
 				Add Assignee
 			</Button>
 		</CardContent>
