@@ -7,6 +7,7 @@ import TaskModal from "./modals/TaskModal";
 import EditTaskModal from "./modals/EditTaskModal";
 
 import { useTeam } from "../../context/teamContext";
+import { useModal } from "../../context/modalContext";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -15,23 +16,21 @@ import moment from "moment";
 
 function TasksManager() {
 	const { teamTasks } = useTeam();
-
-	console.log("renderuje team manager");
+	const { editTaskModalOpen } = useModal();
 
 	return (
 		<>
 			<main>
-				<TaskModal />
+				{editTaskModalOpen && <TaskModal />}
 				<EditTaskModal />
 				<Box
 					sx={{
 						pt: 8,
-						pb: 6,
 					}}
 				>
 					<Typography
-						component="h1"
-						variant="h2"
+						component="h3"
+						variant="h3"
 						align="center"
 						color="text.primary"
 						gutterBottom
@@ -44,7 +43,13 @@ function TasksManager() {
 							teamTasks
 								.filter((task) => !task.taskFinished)
 								.map((task) => {
-									return <TaskCard taskId={task.taskId} key={task.taskId} />;
+									return (
+										<TaskCard
+											taskId={task.taskId}
+											key={task.taskId}
+											finished={false}
+										/>
+									);
 								})
 								.sort((a, b) => {
 									if (moment(a.taskDueDate) > moment(b.taskDueDate)) {
@@ -57,25 +62,30 @@ function TasksManager() {
 				</Box>
 				<Box
 					sx={{
-						pt: 8,
 						pb: 6,
 					}}
 				>
 					<Typography
-						component="h1"
-						variant="h2"
+						component="h4"
+						variant="h4"
 						align="center"
 						color="text.primary"
 						gutterBottom
 					>
 						Finished Tasks:
 					</Typography>
-					<Container sx={{ py: 8 }} maxWidth="md">
+					<Container sx={{ py: 2 }} maxWidth="md">
 						{teamTasks &&
 							teamTasks
 								.filter((task) => task.taskFinished)
 								.map((task) => {
-									return <TaskCard taskId={task.taskId} key={task.taskId} />;
+									return (
+										<TaskCard
+											taskId={task.taskId}
+											key={task.taskId}
+											finished={true}
+										/>
+									);
 								})}
 					</Container>
 				</Box>

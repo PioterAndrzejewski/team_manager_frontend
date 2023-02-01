@@ -20,16 +20,15 @@ import { useAssignee } from "../../context/assigneeContext";
 import { useTeam } from "../../context/teamContext";
 import { useModal } from "../../context/modalContext";
 
-function TaskCard({ taskId }) {
+function TaskCard({ taskId, finished }) {
 	const [editId, setEditId] = useState(undefined);
 	const [mode, setMode] = useState(undefined);
 	const [taskOverDue, setTaskOverDue] = useState(false);
 
 	const { projectId, updateTasks, teamTasks, updateTeamMembers } = useTeam();
-	const { setEditTaskModalOpen, setModalMode } = useModal();
+	const { setEditTaskModalOpen, setModalMode, changeTaskToEdit } = useModal();
 
 	const taskToRender = teamTasks.find((task) => task.taskId === taskId);
-	console.log({ taskToRender });
 	const {
 		taskName,
 		taskDescription,
@@ -81,6 +80,12 @@ function TaskCard({ taskId }) {
 	}, [editId]);
 
 	const handleEditButton = (e) => {
+		changeTaskToEdit({
+			taskName,
+			taskDescription,
+			taskDueDate,
+			taskFinishedDate,
+		});
 		setModalMode("edit");
 		setEditTaskModalOpen(true);
 	};
@@ -111,6 +116,7 @@ function TaskCard({ taskId }) {
 				sx={{
 					display: "flex",
 					backgroundColor: taskOverDue && "#FFB09F",
+					opacity: finished && 0.5,
 				}}
 			>
 				<CardContent
@@ -192,7 +198,7 @@ function TaskCard({ taskId }) {
 						</Button>
 					</Box>
 				</CardContent>
-				<TaskAssignees taskId={taskId}></TaskAssignees>
+				{!finished && <TaskAssignees taskId={taskId}></TaskAssignees>}
 			</Card>
 		</Grid>
 	);

@@ -13,7 +13,6 @@ function NewTaskCard(props) {
 	const { setTaskModalOpen, setModalMode } = useModal();
 
 	const handleNewTask = () => {
-		console.log("otwieram?");
 		setModalMode("create");
 		setTaskModalOpen(true);
 	};

@@ -11,15 +11,9 @@ export const ModalProvider = ({ children }) => {
 	const [modalMode, setModalMode] = useState("create");
 	const [taskToEdit, setTaskToEdit] = useState({
 		taskId: 0,
-		taskName: "Task name eee",
-		taskDescription: "Description",
+		taskName: "New task name",
+		taskDescription: "Task dDescription",
 		taskDueDate: moment(),
-		taskFinished: false,
-	});
-
-	useEffect(() => {
-		console.log("renderuję modalprovider");
-		console.log(taskToEdit);
 	});
 
 	const changeTaskToEdit = (data) => {

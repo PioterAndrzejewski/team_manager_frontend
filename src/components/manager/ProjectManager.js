@@ -24,7 +24,7 @@ function ProjectManager() {
 				`http://127.0.0.1:3636/project/${projectId}`
 			);
 			if (!response.data.projectExists) {
-				navigate("/");
+				navigate("/manager/home");
 				setError({
 					is: true,
 					message: response.data.message,
@@ -47,7 +47,7 @@ function ProjectManager() {
 		<>
 			<SectionBar />
 			<Routes>
-				<Route path="home" element={<Home />} />
+				<Route path="" element={<Home />} />
 				<Route path="team" element={<TeamManager />} />
 				<Route path="tasks" element={<TasksManager />} />
 				<Route path="settings" element={<TeamSettings />} />

@@ -8,7 +8,7 @@ import { useTeam } from "../../context/teamContext";
 import { Block } from "@mui/icons-material";
 
 const sections = [
-	{ title: "Home screen", url: "/manager/home" },
+	{ title: "Home screen", url: "/manager/" },
 	{ title: "Manage Team", url: "/manager/team" },
 	{ title: "Manage Tasks", url: "/manager/tasks" },
 	{ title: "Project settings", url: "/manager/settings" },

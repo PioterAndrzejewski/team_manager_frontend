@@ -46,12 +46,12 @@ export default function ProjectSelector() {
 		}
 		setError({ is: false, message: "" });
 		localStorage.setItem("useProjectId", inputValue);
-		navigate("/manager");
+		navigate("/manager/home");
 	};
 
 	const handleLinkClick = () => {
 		localStorage.setItem("useProjectId", localStorage.getItem("lastProjectId"));
-		navigate("/manager");
+		navigate("/manager/home");
 	};
 
 	return (

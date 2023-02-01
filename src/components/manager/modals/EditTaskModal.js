@@ -37,7 +37,7 @@ export default function EditTaskModal() {
 	const { projectId, updateTasks } = useTeam();
 	const { error, setError } = useError();
 
-	const [nameInputValue, setNameInputValue] = useState("New task name");
+	const [nameInputValue, setNameInputValue] = useState(taskToEdit.taskName);
 	const [descriptionInputValue, setDescriptionInputValue] = useState(
 		"New task description"
 	);
@@ -99,15 +99,10 @@ export default function EditTaskModal() {
 	return useMemo(() => {
 		return (
 			<div>
-				<Modal
-					open={editTaskModalOpen}
-					onClose={handleClose}
-					aria-labelledby="modal-modal-title"
-					aria-describedby="modal-modal-description"
-				>
+				<Modal open={editTaskModalOpen} onClose={handleClose}>
 					<Box sx={style}>
 						<Typography component="h1" variant="h5">
-							Edit task
+							Edit task: {taskToEdit.taskName}
 						</Typography>
 						<Box component="form" noValidate sx={{ mt: 1 }}>
 							<Stack spacing={3}>
@@ -136,7 +131,6 @@ export default function EditTaskModal() {
 									value={descriptionInputValue}
 									onChange={handleDescriptionChange}
 									helperText="Please enter description or leave it blank"
-									defaultValue={taskToEdit.taskDescription}
 								/>
 								<LocalizationProvider
 									dateAdapter={AdapterMoment}
@@ -149,19 +143,15 @@ export default function EditTaskModal() {
 										value={dateValue}
 										onChange={handleDateChange}
 										renderInput={(params) => <TextField {...params} />}
-										defaultValue={taskToEdit.taskDueDate}
 									/>
-									{taskToEdit.taskFinished && (
-										<MobileDatePicker
-											label="Task finished date"
-											inputFormat="MM/DD/YYYY"
-											showToolbar
-											value={finishedDateValue}
-											onChange={handleFinishedDateChange}
-											renderInput={(params) => <TextField {...params} />}
-											defaultValue={taskToEdit.taskFinishedDate}
-										/>
-									)}
+									<MobileDatePicker
+										label="Task finished date"
+										inputFormat="MM/DD/YYYY"
+										showToolbar
+										value={finishedDateValue}
+										onChange={handleFinishedDateChange}
+										renderInput={(params) => <TextField {...params} />}
+									/>
 								</LocalizationProvider>
 								<Button
 									type="submit"
