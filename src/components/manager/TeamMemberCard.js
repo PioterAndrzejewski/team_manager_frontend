@@ -12,12 +12,15 @@ import Typography from "@mui/material/Typography";
 
 import { useTeam } from "../../context/teamContext";
 import { useModal } from "../../context/modalContext";
+import { useNavigate } from "react-router-dom";
 
 function TeamMemberCard({ teamMember }) {
 	const { projectId, updateTeamMembers, teamMembers, updateTasks } = useTeam();
 	const [removeId, setRemoveId] = useState(undefined);
 	const { teamModalOpen, setTeamModalOpen, setModalMode, setTeamMemberToEdit } =
 		useModal();
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const handleFetch = async () => {
@@ -54,6 +57,11 @@ function TeamMemberCard({ teamMember }) {
 			name: teamMember.memberName,
 		});
 		setTeamModalOpen(true);
+	};
+
+	const handleViewTasksButton = (e) => {
+		e.preventDefault();
+		navigate(`/manager/member/${teamMember.memberId}`);
 	};
 
 	return (
@@ -95,6 +103,7 @@ function TeamMemberCard({ teamMember }) {
 								backgroundColor: "#e6f2ff",
 							},
 						}}
+						onClick={handleViewTasksButton}
 					>
 						View tasks
 					</Button>

@@ -11,6 +11,7 @@ import TeamSettings from "./TeamSettings";
 import { useError } from "../../context/errorContext";
 import { useTeam } from "../../context/teamContext";
 import { useNavigate } from "react-router-dom";
+import MemberTasks from "./MemberTasks";
 
 function ProjectManager() {
 	const { setError } = useError();
@@ -23,8 +24,8 @@ function ProjectManager() {
 			const response = await axios(
 				`http://127.0.0.1:3636/project/${projectId}`
 			);
-			if (!response.data.projectExists) {
-				navigate("/manager/home");
+			if (response.data.projectDoesntExist) {
+				navigate("/");
 				setError({
 					is: true,
 					message: response.data.message,
@@ -35,7 +36,6 @@ function ProjectManager() {
 				is: false,
 				message: "",
 			});
-
 			updateTeam(response.data);
 		};
 
@@ -51,6 +51,7 @@ function ProjectManager() {
 				<Route path="team" element={<TeamManager />} />
 				<Route path="tasks" element={<TasksManager />} />
 				<Route path="settings" element={<TeamSettings />} />
+				<Route path="member/:id" element={<MemberTasks />} />
 			</Routes>
 		</>
 	);

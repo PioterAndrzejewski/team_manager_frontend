@@ -81,9 +81,11 @@ function TaskCard({ taskId, finished, controls }) {
 
 	const handleEditButton = (e) => {
 		changeTaskToEdit({
+			taskId,
 			taskName,
 			taskDescription,
 			taskDueDate,
+			taskFinished,
 			taskFinishedDate,
 		});
 		setModalMode("edit");

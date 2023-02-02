@@ -1,5 +1,4 @@
 import React from "react";
-import { useMemo } from "react";
 
 import TaskCard from "./TaskCard";
 import NewTaskCard from "./NewTaskCard";
@@ -41,6 +40,13 @@ function TasksManager() {
 						<NewTaskCard />
 						{teamTasks &&
 							teamTasks
+								.sort((a, b) => {
+									if (moment(a.taskDueDate) > moment(b.taskDueDate)) {
+										return 1;
+									} else {
+										return -1;
+									}
+								})
 								.filter((task) => !task.taskFinished)
 								.map((task) => {
 									return (
@@ -51,13 +57,6 @@ function TasksManager() {
 											controls={true}
 										/>
 									);
-								})
-								.sort((a, b) => {
-									if (moment(a.taskDueDate) > moment(b.taskDueDate)) {
-										return 1;
-									} else {
-										return -1;
-									}
 								})}
 					</Container>
 				</Box>
@@ -88,6 +87,13 @@ function TasksManager() {
 											controls={true}
 										/>
 									);
+								})
+								.sort((a, b) => {
+									if (moment(a.taskFinishedDate) > moment(b.taskFinishedDate)) {
+										return 1;
+									} else {
+										return -1;
+									}
 								})}
 					</Container>
 				</Box>

@@ -39,10 +39,12 @@ export default function EditTaskModal() {
 
 	const [nameInputValue, setNameInputValue] = useState(taskToEdit.taskName);
 	const [descriptionInputValue, setDescriptionInputValue] = useState(
-		"New task description"
+		taskToEdit.taskDescription
 	);
-	const [dateValue, setDateValue] = useState(moment());
-	const [finishedDateValue, setFinishedDateValue] = useState();
+	const [dateValue, setDateValue] = useState(taskToEdit.taskDueDate);
+	const [finishedDateValue, setFinishedDateValue] = useState(
+		taskToEdit.taskFinishedDate
+	);
 
 	const handleClose = () => {
 		setError({ is: false, message: "" });
@@ -77,9 +79,10 @@ export default function EditTaskModal() {
 			formData.append("taskDueDate", dateValue);
 			formData.append("taskName", nameInputValue);
 			formData.append("taskFinished", taskToEdit.taskFinished);
-			formData.append("taskFinishedDate", finishedDateValue);
 			formData.append("taskDescription", descriptionInputValue);
-			formData.append("taskFinishedDate", finishedDateValue);
+			if (taskToEdit.taskFinished) {
+				formData.append("taskFinishedDate", finishedDateValue);
+			}
 
 			const response = await axios({
 				method: "post",
@@ -144,14 +147,16 @@ export default function EditTaskModal() {
 										onChange={handleDateChange}
 										renderInput={(params) => <TextField {...params} />}
 									/>
-									<MobileDatePicker
-										label="Task finished date"
-										inputFormat="MM/DD/YYYY"
-										showToolbar
-										value={finishedDateValue}
-										onChange={handleFinishedDateChange}
-										renderInput={(params) => <TextField {...params} />}
-									/>
+									{taskToEdit.taskFinished && (
+										<MobileDatePicker
+											label="Task finished date"
+											inputFormat="MM/DD/YYYY"
+											showToolbar
+											value={finishedDateValue}
+											onChange={handleFinishedDateChange}
+											renderInput={(params) => <TextField {...params} />}
+										/>
+									)}
 								</LocalizationProvider>
 								<Button
 									type="submit"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -12,12 +12,11 @@ import TeamMemberModal from "./modals/TeamMemberModal";
 import { useTeam } from "../../context/teamContext";
 
 function TeamManager() {
-	const { teamMembers, teamModalOpen } = useTeam();
-
+	const { teamMembers } = useTeam();
 	return (
 		<>
 			<main>
-				{teamModalOpen && <TeamMemberModal />}
+				<TeamMemberModal />
 
 				<Box
 					sx={{
@@ -39,12 +38,13 @@ function TeamManager() {
 				</Box>
 				<Container sx={{ py: 8 }} maxWidth="md">
 					<Grid container spacing={4}>
-						{teamMembers.map((teamMember) => (
-							<TeamMemberCard
-								teamMember={teamMember}
-								key={teamMember.memberId}
-							/>
-						))}
+						{teamMembers &&
+							teamMembers.map((teamMember) => (
+								<TeamMemberCard
+									teamMember={teamMember}
+									key={teamMember.memberId}
+								/>
+							))}
 						<TeamMemberNewCard />
 					</Grid>
 				</Container>
