@@ -20,7 +20,7 @@ import { useAssignee } from "../../context/assigneeContext";
 import { useTeam } from "../../context/teamContext";
 import { useModal } from "../../context/modalContext";
 
-function TaskCard({ taskId, finished }) {
+function TaskCard({ taskId, finished, controls }) {
 	const [editId, setEditId] = useState(undefined);
 	const [mode, setMode] = useState(undefined);
 	const [taskOverDue, setTaskOverDue] = useState(false);
@@ -148,57 +148,61 @@ function TaskCard({ taskId, finished }) {
 							</Typography>
 						)}
 					</Box>
-					<Box sx={{ mt: "10px" }}>
-						<Button
-							size="small"
-							sx={{
-								transition: "0.1s",
-								backgroundColor: "white",
-								boxShadow: "grey 1px 1px 3px",
-								"&:hover": {
-									transform: "scale(105%)",
-									backgroundColor: "#e6f2ff",
-								},
-							}}
-							onClick={handleEditButton}
-						>
-							Edit
-						</Button>
-						<Button
-							size="small"
-							color="error"
-							onClick={handleRemoveButton}
-							sx={{
-								mx: "5px",
-								transition: "0.1s",
-								backgroundColor: "white",
-								boxShadow: "grey 1px 1px 3px",
-								"&:hover": {
-									transform: "scale(105%)",
-									backgroundColor: "#FFF4F4",
-								},
-							}}
-						>
-							Remove task
-						</Button>
-						<Button
-							size="small"
-							onClick={handleSetFinishButton}
-							sx={{
-								transition: "0.1s",
-								backgroundColor: "white",
-								boxShadow: "grey 1px 1px 3px",
-								"&:hover": {
-									transform: "scale(105%)",
-									backgroundColor: "#e6f2ff",
-								},
-							}}
-						>
-							{taskFinished ? "Mark as unfinished" : "Mark as finished"}
-						</Button>
-					</Box>
+					{controls && (
+						<Box sx={{ mt: "10px" }}>
+							<Button
+								size="small"
+								sx={{
+									transition: "0.1s",
+									backgroundColor: "white",
+									boxShadow: "grey 1px 1px 3px",
+									"&:hover": {
+										transform: "scale(105%)",
+										backgroundColor: "#e6f2ff",
+									},
+								}}
+								onClick={handleEditButton}
+							>
+								Edit
+							</Button>
+							<Button
+								size="small"
+								color="error"
+								onClick={handleRemoveButton}
+								sx={{
+									mx: "5px",
+									transition: "0.1s",
+									backgroundColor: "white",
+									boxShadow: "grey 1px 1px 3px",
+									"&:hover": {
+										transform: "scale(105%)",
+										backgroundColor: "#FFF4F4",
+									},
+								}}
+							>
+								Remove task
+							</Button>
+							<Button
+								size="small"
+								onClick={handleSetFinishButton}
+								sx={{
+									transition: "0.1s",
+									backgroundColor: "white",
+									boxShadow: "grey 1px 1px 3px",
+									"&:hover": {
+										transform: "scale(105%)",
+										backgroundColor: "#e6f2ff",
+									},
+								}}
+							>
+								{taskFinished ? "Mark as unfinished" : "Mark as finished"}
+							</Button>
+						</Box>
+					)}
 				</CardContent>
-				{!finished && <TaskAssignees taskId={taskId}></TaskAssignees>}
+				{!finished && (
+					<TaskAssignees taskId={taskId} controls={controls}></TaskAssignees>
+				)}
 			</Card>
 		</Grid>
 	);

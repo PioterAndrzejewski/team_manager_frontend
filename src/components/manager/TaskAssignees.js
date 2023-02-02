@@ -22,7 +22,7 @@ import { useAssignee } from "../../context/assigneeContext";
 import { useTeam } from "../../context/teamContext";
 import { useModal } from "../../context/modalContext";
 
-function TaskAssignees({ taskId }) {
+function TaskAssignees({ taskId, controls }) {
 	const { projectId, updateTasks, teamMembers, teamTasks, updateTeamMembers } =
 		useTeam();
 	const { anchorEl, setAnchorEl, setAnchorElId, anchorElId } = useAssignee();
@@ -30,6 +30,23 @@ function TaskAssignees({ taskId }) {
 
 	const taskToRender = teamTasks.find((task) => task.taskId === taskId);
 	const { taskAssignees } = taskToRender;
+
+	const assigneeStyle = controls
+		? {
+				color: "black",
+				justifyContent: "flex-start",
+				transition: "0.1s",
+				cursor: "pointer",
+				"&:hover": {
+					transform: "scale(105%)",
+					backgroundColor: "#eedddd",
+				},
+		  }
+		: {
+				color: "black",
+				justifyContent: "flex-start",
+				cursor: "auto",
+		  };
 
 	useEffect(() => {
 		const handleFetch = async () => {
@@ -83,17 +100,12 @@ function TaskAssignees({ taskId }) {
 							<Button
 								color="error"
 								key={assigneeId}
-								sx={{
-									color: "black",
-									justifyContent: "flex-start",
-									transition: "0.1s",
-									"&:hover": {
-										transform: "scale(105%)",
-										backgroundColor: "#eedddd",
-									},
-								}}
+								disabled={!controls}
+								sx={assigneeStyle}
 								onClick={() => {
-									setRemoveAssigneeId(assigneeId);
+									if (controls) {
+										setRemoveAssigneeId(assigneeId);
+									}
 								}}
 							>
 								<CardMedia
@@ -110,29 +122,30 @@ function TaskAssignees({ taskId }) {
 								/>
 
 								{teamMemberToRender.memberName}
-								<PersonRemove sx={{ ml: "15px" }} />
+								{controls && <PersonRemove sx={{ ml: "15px" }} />}
 							</Button>
 						);
 					})}
 				</Box>
 			</Box>
 			{anchorElId === taskId && <NewAssigneeMenu taskId={taskId} />}
-
-			<Button
-				size="medium"
-				onClick={handleAddAssigneeClick}
-				sx={{
-					m: "5px",
-					transition: "0.1s",
-					"&:hover": {
-						transform: "scale(105%)",
-						backgroundColor: "#e6f2ff",
-					},
-				}}
-			>
-				<PersonAddIcon sx={{ m: "5px" }} />
-				Add Assignee
-			</Button>
+			{controls && (
+				<Button
+					size="medium"
+					onClick={handleAddAssigneeClick}
+					sx={{
+						m: "5px",
+						transition: "0.1s",
+						"&:hover": {
+							transform: "scale(105%)",
+							backgroundColor: "#e6f2ff",
+						},
+					}}
+				>
+					<PersonAddIcon sx={{ m: "5px" }} />
+					Add Assignee
+				</Button>
+			)}
 		</CardContent>
 	);
 }

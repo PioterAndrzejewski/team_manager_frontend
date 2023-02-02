@@ -16,13 +16,13 @@ import moment from "moment";
 
 function TasksManager() {
 	const { teamTasks } = useTeam();
-	const { editTaskModalOpen } = useModal();
+	const { editTaskModalOpen, taskModalOpen } = useModal();
 
 	return (
 		<>
 			<main>
-				{editTaskModalOpen && <TaskModal />}
-				<EditTaskModal />
+				{taskModalOpen && <TaskModal />}
+				{editTaskModalOpen && <EditTaskModal />}
 				<Box
 					sx={{
 						pt: 8,
@@ -48,6 +48,7 @@ function TasksManager() {
 											taskId={task.taskId}
 											key={task.taskId}
 											finished={false}
+											controls={true}
 										/>
 									);
 								})
@@ -84,6 +85,7 @@ function TasksManager() {
 											taskId={task.taskId}
 											key={task.taskId}
 											finished={true}
+											controls={true}
 										/>
 									);
 								})}

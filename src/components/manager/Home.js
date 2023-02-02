@@ -40,7 +40,13 @@ function Home() {
 									!task.taskFinished && moment() > moment(task.taskDueDate)
 							)
 							.map((task) => {
-								return <TaskCard taskId={task.taskId} key={task.taskId} />;
+								return (
+									<TaskCard
+										taskId={task.taskId}
+										key={task.taskId}
+										controls={false}
+									/>
+								);
 							})
 							.sort((a, b) => {
 								if (moment(a.taskDueDate) > moment(b.taskDueDate)) {

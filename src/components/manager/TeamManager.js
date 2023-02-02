@@ -12,12 +12,13 @@ import TeamMemberModal from "./modals/TeamMemberModal";
 import { useTeam } from "../../context/teamContext";
 
 function TeamManager() {
-	const { teamMembers } = useTeam();
+	const { teamMembers, teamModalOpen } = useTeam();
 
 	return (
 		<>
 			<main>
-				<TeamMemberModal />
+				{teamModalOpen && <TeamMemberModal />}
+
 				<Box
 					sx={{
 						pt: 0.5,
@@ -41,7 +42,6 @@ function TeamManager() {
 						{teamMembers.map((teamMember) => (
 							<TeamMemberCard
 								teamMember={teamMember}
-								addCard={false}
 								key={teamMember.memberId}
 							/>
 						))}
