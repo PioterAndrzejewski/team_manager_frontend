@@ -23,39 +23,6 @@ function Home() {
 				<Chrono />
 			</Container>
 			<main>
-				<Typography
-					component="h4"
-					variant="h4"
-					align="center"
-					color="text.primary"
-					gutterBottom
-				>
-					Overdue tasks:
-				</Typography>
-				<Container sx={{ py: 8 }} maxWidth="md">
-					{teamTasks &&
-						teamTasks
-							.filter(
-								(task) =>
-									!task.taskFinished && moment() > moment(task.taskDueDate)
-							)
-							.map((task) => {
-								return (
-									<TaskCard
-										taskId={task.taskId}
-										key={task.taskId}
-										controls={false}
-									/>
-								);
-							})
-							.sort((a, b) => {
-								if (moment(a.taskDueDate) > moment(b.taskDueDate)) {
-									return 1;
-								} else {
-									return -1;
-								}
-							})}
-				</Container>
 				<HomeStats />
 			</main>
 		</>
