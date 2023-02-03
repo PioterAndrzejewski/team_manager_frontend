@@ -28,6 +28,7 @@ After cloning the repository and installing dependencies run the app using npm s
   $ npm start
   ```
 Now you're ready to test the app in your browser on localhost:3000
+Please note that the backend server is required for the full operation of the application. Link to repository is [here](#back-end)
 
 ### Built With
 
