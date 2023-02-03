@@ -1,0 +1,11 @@
+{
+  "files": {
+    "main.js": "/team_manager_frontend/static/js/main.16dd9f32.js",
+    "static/media/avatar.jpg": "/team_manager_frontend/static/media/avatar.2a0ca5b156900b6fbe48.jpg",
+    "index.html": "/team_manager_frontend/index.html",
+    "main.16dd9f32.js.map": "/team_manager_frontend/static/js/main.16dd9f32.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.16dd9f32.js"
+  ]
+}
