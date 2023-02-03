@@ -17,7 +17,7 @@ import Alert from "@mui/material/Alert";
 import { Link as RouterLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import { useTeam } from "../../context/teamContext";
+import { useTeam } from "../context/teamContext";
 
 export default function SignUp() {
 	const navigate = useNavigate();
