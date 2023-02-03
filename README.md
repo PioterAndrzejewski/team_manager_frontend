@@ -13,7 +13,6 @@
   <p align="center">
     Team Manager - frontend
     <br />
-    <a href="/">View Demo</a>
   </p>
 </div>
 
