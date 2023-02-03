@@ -11,7 +11,7 @@ export const TeamProvider = ({ children }) => {
 
 	const [projectId, setProjectId] = useState();
 
-	const HOST = "https://team-manager-qfen.onrender.com/";
+	const HOST = "https://team-manager-qfen.onrender.com";
 
 	const changeProjectName = (newProjectName) => {
 		setProjectName(newProjectName);
