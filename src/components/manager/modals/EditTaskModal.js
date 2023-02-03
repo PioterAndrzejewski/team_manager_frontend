@@ -1,9 +1,8 @@
 import * as React from "react";
 import axios from "axios";
-import moment from "moment";
 
 import Modal from "@mui/material/Modal";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -34,7 +33,7 @@ const style = {
 export default function EditTaskModal() {
 	const { editTaskModalOpen, setEditTaskModalOpen, taskToEdit, modalMode } =
 		useModal();
-	const { projectId, updateTasks } = useTeam();
+	const { projectId, updateTasks, HOST } = useTeam();
 	const { error, setError } = useError();
 
 	const [nameInputValue, setNameInputValue] = useState(taskToEdit.taskName);
@@ -86,7 +85,7 @@ export default function EditTaskModal() {
 
 			const response = await axios({
 				method: "post",
-				url: "http://127.0.0.1:3636/task",
+				url: `${HOST}/task`,
 				data: formData,
 				headers: { "Content-Type": "multipart/form-data" },
 			});
@@ -99,79 +98,77 @@ export default function EditTaskModal() {
 		};
 		handleFetch();
 	};
-	return useMemo(() => {
-		return (
-			<div>
-				<Modal open={editTaskModalOpen} onClose={handleClose}>
-					<Box sx={style}>
-						<Typography component="h1" variant="h5">
-							Edit task: {taskToEdit.taskName}
-						</Typography>
-						<Box component="form" noValidate sx={{ mt: 1 }}>
-							<Stack spacing={3}>
-								{error.is && (
-									<Alert severity="error" sx={{ width: "100%" }}>
-										{error.message}
-									</Alert>
-								)}
-								<TextField
-									margin="normal"
-									required
-									fullWidth
-									id="taskName"
-									label={`Edit task: ${taskToEdit.taskName}`}
-									name="taskName"
-									value={nameInputValue}
-									onChange={handleNameChange}
-									helperText="Please enter task name at least 4 characters"
+	return (
+		<div>
+			<Modal open={editTaskModalOpen} onClose={handleClose}>
+				<Box sx={style}>
+					<Typography component="h1" variant="h5">
+						Edit task: {taskToEdit.taskName}
+					</Typography>
+					<Box component="form" noValidate sx={{ mt: 1 }}>
+						<Stack spacing={3}>
+							{error.is && (
+								<Alert severity="error" sx={{ width: "100%" }}>
+									{error.message}
+								</Alert>
+							)}
+							<TextField
+								margin="normal"
+								required
+								fullWidth
+								id="taskName"
+								label={`Edit task: ${taskToEdit.taskName}`}
+								name="taskName"
+								value={nameInputValue}
+								onChange={handleNameChange}
+								helperText="Please enter task name at least 4 characters"
+							/>
+							<TextField
+								id="taskDescription"
+								label="Task description"
+								fullWidth
+								multiline
+								rows={4}
+								value={descriptionInputValue}
+								onChange={handleDescriptionChange}
+								helperText="Please enter description or leave it blank"
+							/>
+							<LocalizationProvider
+								dateAdapter={AdapterMoment}
+								adapterLocale="pl-PL"
+							>
+								<MobileDatePicker
+									label="Task due date"
+									inputFormat="MM/DD/YYYY"
+									showToolbar
+									value={dateValue}
+									onChange={handleDateChange}
+									renderInput={(params) => <TextField {...params} />}
 								/>
-								<TextField
-									id="taskDescription"
-									label="Task description"
-									fullWidth
-									multiline
-									rows={4}
-									value={descriptionInputValue}
-									onChange={handleDescriptionChange}
-									helperText="Please enter description or leave it blank"
-								/>
-								<LocalizationProvider
-									dateAdapter={AdapterMoment}
-									adapterLocale="pl-PL"
-								>
+								{taskToEdit.taskFinished && (
 									<MobileDatePicker
-										label="Task due date"
+										label="Task finished date"
 										inputFormat="MM/DD/YYYY"
 										showToolbar
-										value={dateValue}
-										onChange={handleDateChange}
+										value={finishedDateValue}
+										onChange={handleFinishedDateChange}
 										renderInput={(params) => <TextField {...params} />}
 									/>
-									{taskToEdit.taskFinished && (
-										<MobileDatePicker
-											label="Task finished date"
-											inputFormat="MM/DD/YYYY"
-											showToolbar
-											value={finishedDateValue}
-											onChange={handleFinishedDateChange}
-											renderInput={(params) => <TextField {...params} />}
-										/>
-									)}
-								</LocalizationProvider>
-								<Button
-									type="submit"
-									fullWidth
-									variant="contained"
-									sx={{ mt: 3, mb: 2 }}
-									onClick={handleButton}
-								>
-									Edit task
-								</Button>
-							</Stack>
-						</Box>
+								)}
+							</LocalizationProvider>
+							<Button
+								type="submit"
+								fullWidth
+								variant="contained"
+								sx={{ mt: 3, mb: 2 }}
+								onClick={handleButton}
+							>
+								Edit task
+							</Button>
+						</Stack>
 					</Box>
-				</Modal>
-			</div>
-		);
-	});
+				</Box>
+			</Modal>
+		</div>
+	);
 }

@@ -11,6 +11,9 @@ import ManageAccounts from "@mui/icons-material/ManageAccounts";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Alert from "@mui/material/Alert";
+import CardMedia from "@mui/material/CardMedia";
+
+import logo from "../images/logo.png";
 
 import { Link as RouterLink } from "react-router-dom";
 

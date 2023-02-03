@@ -7,7 +7,6 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 import { useTeam } from "../../context/teamContext";
@@ -15,16 +14,16 @@ import { useModal } from "../../context/modalContext";
 import { useNavigate } from "react-router-dom";
 
 function TeamMemberCard({ teamMember }) {
-	const { projectId, updateTeamMembers, teamMembers, updateTasks } = useTeam();
+	const { projectId, updateTeamMembers, teamMembers, updateTasks, HOST } =
+		useTeam();
 	const [removeId, setRemoveId] = useState(undefined);
-	const { teamModalOpen, setTeamModalOpen, setModalMode, setTeamMemberToEdit } =
-		useModal();
+	const { setTeamModalOpen, setModalMode, setTeamMemberToEdit } = useModal();
 
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		const handleFetch = async () => {
-			const response = await axios.post("http://127.0.0.1:3636/removemember", {
+			const response = await axios.post(`${HOST}/removemember`, {
 				projectId,
 				removeMemberId: teamMember.memberId,
 			});

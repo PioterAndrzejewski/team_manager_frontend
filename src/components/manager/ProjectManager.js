@@ -15,15 +15,13 @@ import MemberTasks from "./MemberTasks";
 
 function ProjectManager() {
 	const { setError } = useError();
-	const { updateTeam } = useTeam();
+	const { updateTeam, HOST } = useTeam();
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchProjectData = async () => {
 			const projectId = localStorage.getItem("useProjectId");
-			const response = await axios(
-				`http://127.0.0.1:3636/project/${projectId}`
-			);
+			const response = await axios(`${HOST}/project/${projectId}`);
 			if (response.data.projectDoesntExist) {
 				navigate("/");
 				setError({

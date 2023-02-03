@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
 
@@ -9,14 +9,9 @@ import Box from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CheckCircleOutlineSharpIcon from "@mui/icons-material/CheckCircleOutlineSharp";
 
-import TeamMemberCardSmall from "./TeamMemberCardSmall";
-import TeamMemberNewCardSmall from "./TeamMemberNewCardSmall";
-import NewAssigneeMenu from "./NewAssigneeMenu";
 import TaskAssignees from "./TaskAssignees";
 
-import { useAssignee } from "../../context/assigneeContext";
 import { useTeam } from "../../context/teamContext";
 import { useModal } from "../../context/modalContext";
 
@@ -25,14 +20,14 @@ function TaskCard({ taskId, finished, controls }) {
 	const [mode, setMode] = useState(undefined);
 	const [taskOverDue, setTaskOverDue] = useState(false);
 
-	const { projectId, updateTasks, teamTasks, updateTeamMembers } = useTeam();
+	const { projectId, updateTasks, teamTasks, updateTeamMembers, HOST } =
+		useTeam();
 	const { setEditTaskModalOpen, setModalMode, changeTaskToEdit } = useModal();
 
 	const taskToRender = teamTasks.find((task) => task.taskId === taskId);
 	const {
 		taskName,
 		taskDescription,
-		taskAssignees,
 		taskDueDate,
 		taskFinished,
 		taskFinishedDate,
@@ -44,7 +39,7 @@ function TaskCard({ taskId, finished, controls }) {
 
 	useEffect(() => {
 		const handleFetch = async () => {
-			const response = await axios.post("http://127.0.0.1:3636/task", {
+			const response = await axios.post(`${HOST}/task`, {
 				projectId,
 				taskToEditId: taskId,
 				mode,
@@ -57,7 +52,7 @@ function TaskCard({ taskId, finished, controls }) {
 			if (
 				mode === "setfinished" ||
 				mode === "setunfinished" ||
-				mode == "edit"
+				mode === "edit"
 			) {
 				updateTasks(response.data.updatedTaskList);
 				return;
@@ -73,7 +68,7 @@ function TaskCard({ taskId, finished, controls }) {
 			}
 		};
 
-		if (editId != undefined) {
+		if (editId !== undefined) {
 			handleFetch();
 			setEditId(undefined);
 		}

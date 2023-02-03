@@ -5,6 +5,8 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import { Link as RouterLink } from "react-router-dom";
+import CardMedia from "@mui/material/CardMedia";
+import logo from "../images/logo.png";
 
 function Header(props) {
 	const { title } = props;
@@ -19,7 +21,10 @@ function Header(props) {
 				}}
 			>
 				<Toolbar>
-					<GitHubIcon sx={{ mr: "25px" }} color="primary" />
+					<Button variant="outlined" size="small" component={RouterLink} to="/">
+						Welcome page
+					</Button>
+					<GitHubIcon sx={{ mr: "5px", ml: "35px" }} color="primary" />
 					<Button size="medium">
 						<Link
 							noWrap
@@ -33,7 +38,7 @@ function Header(props) {
 							BE
 						</Link>
 					</Button>
-					<Button size="medium">
+					<Button size="sm" sx={{ padding: "5px" }}>
 						<Link
 							noWrap
 							variant="body2"
@@ -48,9 +53,12 @@ function Header(props) {
 					</Button>
 				</Toolbar>
 
-				<Button variant="outlined" size="small" component={RouterLink} to="/">
-					Welcome page
-				</Button>
+				<CardMedia
+					component="img"
+					sx={{ width: "200px" }}
+					image={logo}
+					alt="random"
+				/>
 			</Toolbar>
 		</React.Fragment>
 	);

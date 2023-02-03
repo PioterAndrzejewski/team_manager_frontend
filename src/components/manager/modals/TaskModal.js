@@ -32,7 +32,7 @@ const style = {
 };
 
 export default function TaskModal() {
-	const { projectId, updateTasks } = useTeam();
+	const { projectId, updateTasks, HOST } = useTeam();
 	const { taskModalOpen, setTaskModalOpen, modalMode } = useModal();
 	const { error, setError } = useError();
 
@@ -40,7 +40,6 @@ export default function TaskModal() {
 	const [descriptionInputValue, setDescriptionInputValue] = useState("");
 
 	const [dateValue, setDateValue] = useState(moment());
-	const [finishedDateValue, setFinishedDateValue] = useState(moment());
 
 	const handleClose = () => {
 		setError({ is: false, message: "" });
@@ -73,7 +72,7 @@ export default function TaskModal() {
 
 			const response = await axios({
 				method: "post",
-				url: "http://127.0.0.1:3636/task",
+				url: `${HOST}/task`,
 				data: formData,
 				headers: { "Content-Type": "multipart/form-data" },
 			});

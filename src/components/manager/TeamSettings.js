@@ -6,9 +6,7 @@ import axios from "axios";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -21,14 +19,14 @@ import { useError } from "../../context/errorContext";
 function TeamSettings() {
 	const [deleteProject, setDeleteProject] = useState(false);
 	const [editProject, setEditProject] = useState("");
-	const { projectName, projectId, changeProjectName } = useTeam();
+	const { projectName, projectId, changeProjectName, HOST } = useTeam();
 	const [projectNameInput, setProjectNameInput] = useState("");
 
 	const navigate = useNavigate();
 	const { setError } = useError();
 
 	const handleFetch = async (mode) => {
-		const response = await axios.post("http://127.0.0.1:3636/editproject", {
+		const response = await axios.post(`${HOST}/editproject`, {
 			projectId: projectId,
 			mode,
 			newProjectName: projectNameInput,

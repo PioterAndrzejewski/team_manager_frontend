@@ -7,6 +7,7 @@ import CreateProject from "./components/CreateProject";
 import Copyright from "./components/Copyright";
 import ProjectManager from "./components/manager/ProjectManager";
 import CssBaseline from "@mui/material/CssBaseline";
+import Box from "@mui/material/Box";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ErrorProvider } from "./context/errorContext";

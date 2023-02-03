@@ -17,8 +17,11 @@ import Alert from "@mui/material/Alert";
 import { Link as RouterLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
+import { useTeam } from "../../context/teamContext";
+
 export default function SignUp() {
 	const navigate = useNavigate();
+	const { HOST } = useTeam();
 
 	const [formEntries, setFormEntries] = useState(undefined);
 	const [isError, setIsError] = useState(false);
@@ -36,10 +39,7 @@ export default function SignUp() {
 
 	useEffect(() => {
 		const fetchCreateProject = async () => {
-			const response = await axios.post(
-				"http://127.0.0.1:3636/createproject",
-				formEntries
-			);
+			const response = await axios.post(`${HOST}/createproject`, formEntries);
 
 			if (response.data.creationSuccess) {
 				localStorage.setItem("lastProjectId", response.data.projectId);
@@ -59,6 +59,7 @@ export default function SignUp() {
 		if (formEntries !== undefined) {
 			fetchCreateProject();
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [formEntries, navigate]);
 
 	return (

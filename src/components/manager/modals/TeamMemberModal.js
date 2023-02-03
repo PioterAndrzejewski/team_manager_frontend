@@ -27,7 +27,7 @@ const style = {
 };
 
 export default function TeamMemberModal() {
-	const { projectId, updateTeamMembers, teamMembers } = useTeam();
+	const { projectId, updateTeamMembers, HOST } = useTeam();
 	const { teamModalOpen, setTeamModalOpen, modalMode, teamMemberToEdit } =
 		useModal();
 	const { error, setError } = useError();
@@ -72,7 +72,7 @@ export default function TeamMemberModal() {
 
 			const response = await axios({
 				method: "post",
-				url: "http://127.0.0.1:3636/member",
+				url: `${HOST}/member`,
 				data: formData,
 				headers: { "Content-Type": "multipart/form-data" },
 			});

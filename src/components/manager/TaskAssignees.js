@@ -23,8 +23,14 @@ import { useTeam } from "../../context/teamContext";
 import { useModal } from "../../context/modalContext";
 
 function TaskAssignees({ taskId, controls }) {
-	const { projectId, updateTasks, teamMembers, teamTasks, updateTeamMembers } =
-		useTeam();
+	const {
+		projectId,
+		updateTasks,
+		teamMembers,
+		teamTasks,
+		updateTeamMembers,
+		HOST,
+	} = useTeam();
 	const { anchorEl, setAnchorEl, setAnchorElId, anchorElId } = useAssignee();
 	const [removeAssigneeId, setRemoveAssigneeId] = useState(undefined);
 
@@ -50,7 +56,7 @@ function TaskAssignees({ taskId, controls }) {
 
 	useEffect(() => {
 		const handleFetch = async () => {
-			const response = await axios.post("http://127.0.0.1:3636/task", {
+			const response = await axios.post(`${HOST}/task`, {
 				mode: "removeassignee",
 				projectId,
 				taskToEditId: taskId,

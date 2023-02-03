@@ -11,8 +11,14 @@ import { useAssignee } from "../../context/assigneeContext";
 import { useTeam } from "../../context/teamContext";
 
 export default function NewAssigneeMenu({ taskId }) {
-	const { teamMembers, teamTasks, updateTeamMembers, updateTasks, projectId } =
-		useTeam();
+	const {
+		teamMembers,
+		teamTasks,
+		updateTeamMembers,
+		updateTasks,
+		projectId,
+		HOST,
+	} = useTeam();
 	const { anchorEl, setAnchorEl, anchorElId, setAnchorElId } = useAssignee();
 
 	const [assigneeToAdd, setAssigneeToAdd] = useState(undefined);
@@ -24,7 +30,7 @@ export default function NewAssigneeMenu({ taskId }) {
 
 	useEffect(() => {
 		const handleFetch = async () => {
-			const response = await axios.post("http://127.0.0.1:3636/task", {
+			const response = await axios.post(`${HOST}/task`, {
 				mode: "addassignee",
 				projectId,
 				taskToEditId: taskId,
