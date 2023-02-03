@@ -55,7 +55,12 @@ See back-end repo <a href="https://github.com/PioterAndrzejewski/team_manager_ba
 The front-end single page application allows you to manage your team using the following modules:
 
  ### open project
-![image](https://user-images.githubusercontent.com/109315248/216441497-7e47c461-19aa-4746-9c2b-26d2750f9b2a.png)
+
+![image](https://user-images.githubusercontent.com/109315248/216596841-3646f0b4-244b-4419-afdb-2dc7229d167e.png)
+
+
+![image](https://user-images.githubusercontent.com/109315248/216596791-cfe657c4-202f-4b6b-818f-930c469cb9d0.png)
+
 
 - Allows you to open already existing project,
 - Allows you to use shortcut with lastly opened project,
