@@ -13,6 +13,8 @@
   <p align="center">
     Team Manager - frontend
     <br />
+    View demo - https://team-manager.ten-onon.repl.co/
+    
   </p>
 </div>
 
