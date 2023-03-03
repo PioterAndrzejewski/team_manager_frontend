@@ -11,10 +11,8 @@
 <h3 align="center">Team Manager</h3>
 
   <p align="center">
-    Team Manager - frontend
     <br />
-    View demo - https://replit.com/@PioterAndrzejew/Team-Manager-todo
-    
+    View demo - https://team-manager-todo--pioterandrzejew.repl.co/ <br> Please give it a moment - the server needs to start.
   </p>
 </div>
 
