@@ -12,7 +12,7 @@
 
   <p align="center">
     <br />
-    View demo - https://team-manager-todo--pioterandrzejew.repl.co/ <br> Please give it a moment - the server needs to start.
+    <a href="https://team-manager-todo--pioterandrzejew.repl.co/">View Demo</a><br> Please give it a moment - the server needs to start.
   </p>
 </div>
 
